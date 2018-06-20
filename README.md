@@ -7,9 +7,9 @@ Fossil](https://devpost.com/software/campaign-contributions-by-industry-segment)
 
 Team Fossil did a data visualization of campaign contributions by industry
 groups. The written submission can be found at
-https://devpost.com/software/campaign-contributions-by-industry-segment
+[https://devpost.com/software/campaign-contributions-by-industry-segment](https://devpost.com/software/campaign-contributions-by-industry-segment)
 and the visualization can be found at
-https://hacc2016.github.io/teamfossil/visualization/.
+[https://hacc2016.github.io/teamfossil/visualization/](https://hacc2016.github.io/teamfossil/visualization/).
 
 
 ## [Code for Hawaii](http://www.codeforhawaii.org/)
