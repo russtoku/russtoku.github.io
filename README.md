@@ -17,3 +17,9 @@ and the visualization can be found at
 I contributed work that brought the [UIPA](https://uipa.org/) website to life.
 There citizens make freedom of information request to Hawaii state and county
 departments. UIPA stands for Uniform Information Practices Act.
+
+## [Kaimuki YMCA](http://www.kaimukiymca.org/)
+
+I created a web page that they can use to easily create the job posting structured data to add to their
+website pages so that Google searches for jobs will pop up their job openings at the top of searches (see [https://jobs.google.com/about/](https://jobs.google.com/about/)). Demo it
+[here](https://russtoku.github.io/job-posting-formatter/job-posting.html).
