@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css" media="screen" type="text/css">
+    <link rel="stylesheet" href="/assets/css/print.css" media="print" type="text/css">
+
+    <title></title>
+  </head>
+
+  <body>
+    <header>
+      
+      <div class="inner">
+        <h1>Russ Tokuyama</h1>
+        
+  
+
+      </div>
+    </header>
+
+    
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          
+  <h1>Neovim and REPLs</h1>
+<p><em>Last update: 06/27/2023</em>
+<br><a href="../index.html">Back to home</a></p>
+<p>This is about sending code that you're editing in a buffer to another process
+running a REPL (interactive program) for the programming language you're
+working with. Hopefully, this should help put things in perspective.</p>
+<p>My goal is to try to understand how the plugins go about doing their thing.</p>
+<p><strong><em>Disclaimer</em></strong></p>
+<blockquote>
+<p>I've used <em>vim-slime</em> in the past for some Python coding but am currently
+using <em>Conjure</em>. I've yet to use <em>Conjure</em> for Clojure coding. I've also
+submitted some PRs for tiny improvements to Python coding with <em>Conjure</em>. They
+take advantage of the Tree-sitter support in Neovim.</p>
+</blockquote>
+<h2>Various plugins</h2>
+<p>There are Vim plugins that help with the goal of sending code to a REPL.</p>
+<table>
+<thead>
+<tr>
+  <th style="text-align:left">Plugin /<br>URL</th>
+  <th style="text-align:left">Implementation</th>
+  <th style="text-align:left">IPC mechanism</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>Conjure</strong> <br> https://github.com/Olical/conjure</td>
+  <td style="text-align:left">Fennel, Lua</td>
+  <td style="text-align:left">uv.spawn(), uv.write()</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>iron.nvim</strong> <br> https://github.com/hkupty/iron.nvim</td>
+  <td style="text-align:left">Lua</td>
+  <td style="text-align:left">termopen(), chansend() <br>Uses bracketed paste mode when sending Python code.</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>vim-fireplace</strong> <br> https://github.com/tpope/vim-fireplace</td>
+  <td style="text-align:left">Vimscript, Python</td>
+  <td style="text-align:left">jobstart(<code>{cmd}</code>), chansend() <br>where <code>{cmd}</code> is something like <em>['python', '.../pythonx/fireplace.py', 'nrepl://127.0.0.1:7888']</em></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>vim-slime</strong> <br> https://github.com/jpalardy/vim-slime</td>
+  <td style="text-align:left">Vimscript</td>
+  <td style="text-align:left">:sp term://<code>{cmd}</code>, chansend()</td>
+</tr>
+</tbody>
+</table>
+<p>I haven't looked into these plugins.</p>
+<table>
+<thead>
+<tr>
+  <th style="text-align:left">Plugin /<br>URL</th>
+  <th style="text-align:left">Implementation</th>
+  <th style="text-align:left">IPC mechanism</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>neoterm</strong>  <br> https://github.com/kassio/neoterm</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>vimcmdline</strong> <br>  https://github.com/jalvesaq/vimcmdline</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>vim-simpl</strong> <br>  https://github.com/benknoble/vim-simpl</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>vlime</strong> <br>  https://github.com/vlime/vlime</td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+
+
+        </section>
+      </div>
+    </div>
+
+    <footer>
+        
+  <p>&copy; Copyright 2023 by Russ Tokuyama</p>
+
+    </footer>
+
+  </body>
+</html>
