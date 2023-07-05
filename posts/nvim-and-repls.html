@@ -1,76 +1,174 @@
----
-date: 06/27/2023
-author: Russ Tokuyama
-copyright_year: 2023
-layout: page
-site_title: Russ Tokuyama
----
-# Neovim and REPLs
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css" media="screen" type="text/css">
+    <link rel="stylesheet" href="/assets/css/print.css" media="print" type="text/css">
 
-*Last update: 07/05/2023*
-<br>[Back to home](../index.html)
+    <title></title>
+  </head>
 
-This is about sending code that you're editing in a buffer to another process
+  <body>
+    <header>
+      
+      <div class="inner">
+        <h1>Russ Tokuyama</h1>
+        
+  
+
+      </div>
+    </header>
+
+    
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          
+  <h1>Neovim and REPLs</h1>
+<p><em>Last update: 07/05/2023</em>
+<br><a href="../index.html">Back to home</a></p>
+<p>This is about sending code that you're editing in a buffer to another process
 running a REPL (interactive program) for the programming language you're
-working with. Hopefully, this should help put things in perspective.
-
-My goal is to try to understand how the plugins go about doing their thing.
-
-**_Disclaimer_**
-
->I've used *vim-slime* in the past for some Python coding but am currently
->using *Conjure*. I've yet to use *Conjure* for Clojure coding. I've also
->submitted some PRs for tiny improvements to Python coding with *Conjure*. They
->take advantage of the Tree-sitter support in Neovim.
-
-
-## Various Plugins
-
-There are Vim plugins that help with the goal of sending code to a REPL.
-
-Plugin | Implementation | IPC Mechanism
-:------ |:--------------|:-------------
-**[Conjure](https://github.com/Olical/conjure)**   | Fennel, Lua | uv.spawn(), uv.write() 
-**[iron.nvim](https://github.com/Vigemus/iron.nvim)**   | Lua | termopen(), chansend() <br>Uses bracketed paste mode when sending Python code.
-**[vim-fireplace](https://github.com/tpope/vim-fireplace)**   | Vimscript, Python | jobstart(`{cmd}`), chansend() <br>where `{cmd}` is something like *['python', '.../pythonx/fireplace.py', 'nrepl://127.0.0.1:7888']* 
-**[vim-slime](https://github.com/jpalardy/vim-slime)**   | Vimscript | :sp term://`{cmd}`, chansend()
-
-
+working with. Hopefully, this should help put things in perspective.</p>
+<p>My goal is to try to understand how the plugins go about doing their thing.</p>
+<p><strong><em>Disclaimer</em></strong></p>
+<blockquote>
+<p>I've used <em>vim-slime</em> in the past for some Python coding but am currently
+using <em>Conjure</em>. I've yet to use <em>Conjure</em> for Clojure coding. I've also
+submitted some PRs for tiny improvements to Python coding with <em>Conjure</em>. They
+take advantage of the Tree-sitter support in Neovim.</p>
+</blockquote>
+<h2>Various Plugins</h2>
+<p>There are Vim plugins that help with the goal of sending code to a REPL.</p>
+<table>
+<thead>
+<tr>
+  <th style="text-align:left">Plugin</th>
+  <th style="text-align:left">Implementation</th>
+  <th style="text-align:left">IPC Mechanism</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong><a href="https://github.com/Olical/conjure">Conjure</a></strong></td>
+  <td style="text-align:left">Fennel, Lua</td>
+  <td style="text-align:left">uv.spawn(), uv.write()</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong><a href="https://github.com/Vigemus/iron.nvim">iron.nvim</a></strong></td>
+  <td style="text-align:left">Lua</td>
+  <td style="text-align:left">termopen(), chansend() <br>Uses bracketed paste mode when sending Python code.</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong><a href="https://github.com/tpope/vim-fireplace">vim-fireplace</a></strong></td>
+  <td style="text-align:left">Vimscript, Python</td>
+  <td style="text-align:left">jobstart(<code>{cmd}</code>), chansend() <br>where <code>{cmd}</code> is something like <em>['python', '.../pythonx/fireplace.py', 'nrepl://127.0.0.1:7888']</em></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong><a href="https://github.com/jpalardy/vim-slime">vim-slime</a></strong></td>
+  <td style="text-align:left">Vimscript</td>
+  <td style="text-align:left">:sp term://<code>{cmd}</code>, chansend()</td>
+</tr>
+</tbody>
+</table>
 <p></p>
-
-I haven't looked into these plugins.
-
-Plugin | Implementation | IPC Mechanism
-:------ |:--------------|:-------------
-**[neoterm](https://github.com/kassio/neoterm)** | |
-**[vimcmdline](https://github.com/jalvesaq/vimcmdline)** | |
-**[vim-simpl](https://github.com/benknoble/vim-simpl)** | |
-**[vlime](https://github.com/vlime/vlime)** | |
-
-
-## Sending Code to a Sub-process
-
-These are the facilities in Neovim that let one send stuff to a child process
-spawned by the main Neovim process. For more information about the *IPC Mechanism*, see the Neovim help (`:help <topic>`; for example: `:he luv`).
-
-IPC Mechanism | Create Sub-process | Send To Sub-process | Read From Sub-process
-:---- | :---- | :---- | :----
-luv | `uv.spawn()` (`Lua`) | `uv.write()` | Via callback on `handle`s for stdout and stderr.
-terminal-emulator | `termopen()` (`Vimscript`) | `chansend()` | Via callbacks: `on_stdout` only (see `:he jobstart-options`).
-terminal-emulator | `:sp term://{cmd}` (`Command-line mode`)| `chansend()` | Not available
-job-control | `jobstart()` (`Vimscript`) | `chansend()` | Via callbacks: `on_stdout` and `on_stderr`.
-
+<p>I haven't looked into these plugins.</p>
+<table>
+<thead>
+<tr>
+  <th style="text-align:left">Plugin</th>
+  <th style="text-align:left">Implementation</th>
+  <th style="text-align:left">IPC Mechanism</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong><a href="https://github.com/kassio/neoterm">neoterm</a></strong></td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong><a href="https://github.com/jalvesaq/vimcmdline">vimcmdline</a></strong></td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong><a href="https://github.com/benknoble/vim-simpl">vim-simpl</a></strong></td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left"></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong><a href="https://github.com/vlime/vlime">vlime</a></strong></td>
+  <td style="text-align:left"></td>
+  <td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+<h2>Sending Code to a Sub-process</h2>
+<p>These are the facilities in Neovim that let one send stuff to a child process
+spawned by the main Neovim process. For more information about the <em>IPC Mechanism</em>, see the Neovim help (<code>:help &lt;topic&gt;</code>; for example: <code>:he luv</code>).</p>
+<table>
+<thead>
+<tr>
+  <th style="text-align:left">IPC Mechanism</th>
+  <th style="text-align:left">Create Sub-process</th>
+  <th style="text-align:left">Send To Sub-process</th>
+  <th style="text-align:left">Read From Sub-process</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">luv</td>
+  <td style="text-align:left"><code>uv.spawn()</code> (<code>Lua</code>)</td>
+  <td style="text-align:left"><code>uv.write()</code></td>
+  <td style="text-align:left">Via callback on <code>handle</code>s for stdout and stderr.</td>
+</tr>
+<tr>
+  <td style="text-align:left">terminal-emulator</td>
+  <td style="text-align:left"><code>termopen()</code> (<code>Vimscript</code>)</td>
+  <td style="text-align:left"><code>chansend()</code></td>
+  <td style="text-align:left">Via callbacks: <code>on_stdout</code> only (see <code>:he jobstart-options</code>).</td>
+</tr>
+<tr>
+  <td style="text-align:left">terminal-emulator</td>
+  <td style="text-align:left"><code>:sp term://{cmd}</code> (<code>Command-line mode</code>)</td>
+  <td style="text-align:left"><code>chansend()</code></td>
+  <td style="text-align:left">Not available</td>
+</tr>
+<tr>
+  <td style="text-align:left">job-control</td>
+  <td style="text-align:left"><code>jobstart()</code> (<code>Vimscript</code>)</td>
+  <td style="text-align:left"><code>chansend()</code></td>
+  <td style="text-align:left">Via callbacks: <code>on_stdout</code> and <code>on_stderr</code>.</td>
+</tr>
+</tbody>
+</table>
 <p></p>
-
-### About the Terminal-Emulator
-
-There are at least two ways to start a terminal emulator Sub-process.
-`termopen()` and `:sp term://{cmd}`. The difference between the two is how they
+<h3>About the Terminal-Emulator</h3>
+<p>There are at least two ways to start a terminal emulator Sub-process.
+<code>termopen()</code> and <code>:sp term://{cmd}</code>. The difference between the two is how they
 are typically used. The latter is generally invoke in command-line mode.
-However, Neovim provides the mechanism to use both programmatically.
-
-While `termopen()` and `jobstart()` take the same arguments, `termopen()` is
-more specialized than `jobstart()`. `termopen()` automatically sets the `pty`
-option of the *jobstart-options*. Thus, the output of the program (`cmd`)
+However, Neovim provides the mechanism to use both programmatically.</p>
+<p>While <code>termopen()</code> and <code>jobstart()</code> take the same arguments, <code>termopen()</code> is
+more specialized than <code>jobstart()</code>. <code>termopen()</code> automatically sets the <code>pty</code>
+option of the <em>jobstart-options</em>. Thus, the output of the program (<code>cmd</code>)
 running in the terminal-emulator is only available via stdout (combination of
-stdout and stderr).
+stdout and stderr).</p>
+
+
+        </section>
+      </div>
+    </div>
+
+    <footer>
+        
+  <p>&copy; Copyright 2023 by Russ Tokuyama</p>
+
+    </footer>
+
+  </body>
+</html>
