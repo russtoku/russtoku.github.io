@@ -31,7 +31,7 @@ There are Vim plugins that help with the goal of sending code to a REPL.
 Plugin | Implementation | IPC Mechanism
 :------ |:--------------|:-------------
 **[Conjure](https://github.com/Olical/conjure)**   | Fennel, Lua | uv.spawn(), uv.write() 
-**[iron.nvim](https://github.com/hkupty/iron.nvim)**   | Lua | termopen(), chansend() <br>Uses bracketed paste mode when sending Python code.
+**[iron.nvim](https://github.com/Vigemus/iron.nvim)**   | Lua | termopen(), chansend() <br>Uses bracketed paste mode when sending Python code.
 **[vim-fireplace](https://github.com/tpope/vim-fireplace)**   | Vimscript, Python | jobstart(`{cmd}`), chansend() <br>where `{cmd}` is something like *['python', '.../pythonx/fireplace.py', 'nrepl://127.0.0.1:7888']* 
 **[vim-slime](https://github.com/jpalardy/vim-slime)**   | Vimscript | :sp term://`{cmd}`, chansend()
 
