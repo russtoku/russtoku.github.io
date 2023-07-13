@@ -28,15 +28,23 @@
       <div class="inner clearfix">
         <section id="main-content">
           
-  <h1>Experience Report - <a href="https://github.com/Olical/nfnl">Olical/nfnl</a></h1>
-<p><em>Last update: 07/11/2023</em>
+  <h1>Enhance your Neovim with Fennel</h1>
+<p><em>Last update: 07/13/2023</em>
 <br><a href="../index.html">Back to home</a></p>
-<p>This is a report about my experiences using the <code>nfnl</code> plugin by Oliver
-Caldwell to create a plugin for Neovim. <code>nfnl</code> allowed me to use <strong><em>Fennel</em></strong>
-instead of <strong><em>Vimscript</em></strong> (<strong><em>VimL</em></strong>). Many thanks, Oliver!</p>
-<p>Of course, this won't work with Vim because we're using <em>Fennel</em> compiled to <em>Lua</em>
-to make Neovim behave the way we want it to. Neovim understands both <em>VimL</em> and
-<em>Lua</em>. Nice!</p>
+<p>This is a report about my experience using the
+<a href="https://github.com/Olical/nfnl">nfnl</a> plugin by Oliver Caldwell to
+create a plugin for Neovim. <code>nfnl</code> allows me to use <em>Fennel</em> instead of
+<em>Vimscript</em> (<em>VimL</em>). Many thanks, Oliver!</p>
+<p>Of course, this won't work with Vim because we're using Fennel compiled to Lua
+to make Neovim behave the way we want it to. Neovim understands both VimL and
+Lua. Nice!</p>
+<p><em>Truth in advertising:</em></p>
+<blockquote>
+<p>You will need to learn some Vimscript and Lua and how to script Vim when you
+venture into writing plugins or setting up configurations. So many ways of
+doing things. It hard to keep things straight and know when to use what for
+the problem you're trying to solve.</p>
+</blockquote>
 <h2>Set Up For A Plugin</h2>
 <p>For this example, we'll use <code>my-plugin</code> as the plugin name.</p>
 <ul>
@@ -60,18 +68,12 @@ $ cd my-plugin
 <li><p>Add this configuration to <code>.nfnl.fnl</code> at the top of the project directory.</p>
 <pre><code class="language-fennel">{:source-file-patterns [&quot;fnl/**/*.fnl&quot;]}
 </code></pre>
-<p>This configuration will compile the <em>.fnl</em> files into <em>.lua</em> files under a
-parallel directory structure.</p>
+<p>This configuration will keep the <em>.fnl</em> and <em>.lua</em> files in separate
+directories using a parallel directory structure. If you don't mind them
+being in the same directory, then don't use separate directories and just put
+<code>{}</code> in your <code>.nfnl.fnl</code> file.</p>
 </li>
 </ul>
-<h2>Put Things Under Version Control With <code>Git</code></h2>
-<p>This is your safety net or time machine. If you commit after a logical step,
-you can try different things and revert back if need or branch for an
-experiment.</p>
-<pre><code>$ git init .
-$ git add .
-$ git commit -m 'initial set-up'
-</code></pre>
 <h2>Add The Code</h2>
 <p>For this example, we'll assume all the hard work of figuring out what to implement in code is done.</p>
 <ul>
@@ -80,6 +82,9 @@ $ git commit -m 'initial set-up'
   lua require(&quot;my-plugin.main&quot;).init()
 endif
 </code></pre>
+<p>When this plugin loads, it will cause the <code>init</code> function in <em>main.lua</em> to be
+run. A deeper explanation of this is beyond this report. See <code>:he write-plugin</code>
+for more about writing plugins.</p>
 </li>
 <li><p>Create <code>fnl/my-plugin/main.fnl</code> with this inside:</p>
 <pre><code class="language-fennel">(local {: autoload} (require :nfnl.module))
@@ -98,22 +103,18 @@ mod
 </li>
 </ul>
 <h2>Compile The Fennel Code</h2>
-<p>While in Neovim with main.fnl loaded, compile the file using this at command
-line:</p>
-<pre><code>:lua require('nfnl')['compile-all-files']()
-</code></pre>
-<p>The first time that you run this command in the project directory, you will be
-prompted to confirm that it is OK to proceed. You'll see something like this in
+<p>Just save your Fennel file. That's it!</p>
+<p><code>nfnl</code> will recognize your <code>.nfnl.fnl</code> file and take it from there.</p>
+<p>The first time that you save the first Fennel file, <code>nfnl</code> will
+prompt you to confirm that it is OK to proceed. You'll see something like this in
 the command output area.</p>
 <pre><code>.../my-plugin/.nfnl.fnl is not trusted.
 [i]gnore, (v)iew, (d)eny, (a)llow: a
 
-Compilation complete.
-[{:destination-path &quot;.../my-plugin/lua/my-plugin/main.lua&quot;
-  :source-path &quot;.../my-plugin/fnl/my-plugin/main.fnl&quot;
-  :status &quot;ok&quot;}]
-Press ENTER or type command to continue
 </code></pre>
+<p>You will only need to have the <code>nfnl.fnl</code> file in the top level directory of
+your project. The confirmation question will only be asked the first time that
+you save a Fennel file anywhere under your project directory.</p>
 <p>The project directory structure looks like this:</p>
 <pre><code>├── .nfnl.fnl
 ├── fnl
@@ -125,48 +126,9 @@ Press ENTER or type command to continue
 └── plugin
     └── my-plugin.vim
 </code></pre>
-<h2>Install The Plugin</h2>
-<p>Let's assume that everything is working at this point. Next we add the
-<code>my-plugin</code> plugin to our Neovim configuration. This will depend on which
-plugin manager you use.</p>
-<p>The manual way is to copy the plugin directory to a package directory something
-like this:</p>
-<pre><code>~/.local/share/nvim/site/pack/manual/start/
-</code></pre>
-<p>See the help about plugins:</p>
-<pre><code>:help add-global-plugin
-:help packadd
-</code></pre>
-<p>Here's an example:</p>
-<pre><code>$ cd ..
-$ mkdir ~/.local/share/nvim/site/pack/manual/start/my-plugin
-
-$ cp -R my-plugin ~/.local/share/nvim/site/pack/manual/start
-$ ls -l ~/.local/share/nvim/site/pack/manual/start/
-total 0
-drwxr-xr-x  7 russ  staff  224 Jul 11 18:05 my-plugin/
-
-$ ls -l ~/.local/share/nvim/site/pack/manual/start/my-plugin/
-total 0
-drwxr-xr-x  3 russ  staff  96 Jul 11 18:05 fnl/
-drwxr-xr-x  3 russ  staff  96 Jul 11 18:05 lua/
-drwxr-xr-x  3 russ  staff  96 Jul 11 18:05 plugin/
-
-$ pwd
-In `~/.local/share/nvim/site/pack/manual/start`, you should see:
-
-$ tree -a -I .git my-plugin
-my-plugin
-├── .nfnl.fnl
-├── fnl
-│   └── my-plugin
-│       └── main.fnl
-├── lua
-│   └── my-plugin
-│       └── main.lua
-└── plugin
-    └── my-plugin.vim
-</code></pre>
+<h2>Install Your Plugin</h2>
+<p>So now that everything is working, we add the <code>my-plugin</code> plugin to our Neovim
+configuration. This will depend on which plugin manager you use.</p>
 <h2>Testing The Plugin</h2>
 <p>When you start Neovim without any arguments, you should see this message appear below the
 status line:</p>
@@ -176,26 +138,20 @@ status line:</p>
 <p>This is confirmation that the plugin is being loaded and called successfully.
 <em>Hello, world!</em></p>
 <h2>Retrospective</h2>
+<p>It was much easier to create the plugin using <code>nfnl</code> compared to <code>Aniseed</code>.
+There's less setup and things to do to get things to work.</p>
+<p>I recommend using this as just one way to start to create plugins.</p>
 <p>It all appears so easy now but the truth is I fumbled around a lot before
-things came together. I tried setting up a plugin using
+things came together. I tried setting up a plugin using Oliver's
 <a href="https://github.com/Olical/aniseed">Aniseed</a>. That experience of getting the
 equivalent of a <em>Hello, world!</em> program running was used here.</p>
-<p>There are a lot of ways to create plugins so this isn't necessarily the best
-way and it really depends on <em>what problem you're trying solve</em>.</p>
 <h3>The Good News :-)</h3>
-<p>It was easier to create the plugin using <code>nfnl</code> compared to <code>Aniseed</code>. I'd
-recommend using this plugin over Aniseed.</p>
-<h3>The Not So Good News :-(</h3>
-<p>While the <code>README.md</code> says:</p>
-<blockquote>
-<p>By default, writing to any Fennel file with Neovim under the directory
-containing <code>.nfnl.fnl</code> will automatically compile it to Lua. If there are
-compilations errors they'll be displayed using <code>vim.notify</code> and the Lua will
-not be updated.</p>
-</blockquote>
-<p>I did have to manually compile the Fennel file into <em>Lua</em>. I probably missed
-something but I can't figure it out. I filed an
-<a href="https://github.com/Olical/nfnl/issues/2">issue</a> to get some help.</p>
+<p>The plugin's author quickly responded to my problem with the plugin not
+automatically compiling a Fennel file. I was using
+<a href="https://github.com/wbthomason/packer.nvim">Packer</a> and some unknown reason
+(probably my unfamiliarity with Fennel, Lua, and Aniseed) the <em>FileType</em>
+autocmd wasn't created for <code>nfnl</code>. That's not a problem any more and things
+<em>just work</em>.</p>
 
 
         </section>
