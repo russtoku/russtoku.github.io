@@ -29,7 +29,7 @@
         <section id="main-content">
           
   <h1>Enhance your Neovim with Fennel</h1>
-<p><em>Last update: 07/13/2023</em>
+<p><em>Last update: 07/31/2023</em>
 <br><a href="../index.html">Back to home</a></p>
 <p>This is a report about my experience using the
 <a href="https://github.com/Olical/nfnl">nfnl</a> plugin by Oliver Caldwell to
@@ -99,6 +99,18 @@ for more about writing plugins.</p>
   (print &quot;  Now just a part of it: &gt;&quot; (string.sub msg 5) &quot;&lt;&quot;))
 
 mod
+</code></pre>
+<p>Alternative to using a <em>local mod</em> variable:</p>
+<pre><code class="language-fennel">(local {: autoload} (require :nfnl.module))
+(local core (autoload :nfnl.core))
+
+(local msg &quot;Tears began to fall from my-plugin! -- Frank Z made me do it.&quot;)
+
+(fn init []
+  (print &quot;This is msg:&quot; msg)
+  (print &quot;  Now just a part of it: &gt;&quot; (string.sub msg 5) &quot;&lt;&quot;))
+
+{: init} ;; Export only these functions. The rest are &quot;local&quot;.
 </code></pre>
 </li>
 </ul>
