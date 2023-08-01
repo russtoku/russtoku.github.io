@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css" media="screen" type="text/css">
+    <link rel="stylesheet" href="/assets/css/print.css" media="print" type="text/css">
+
+    <title></title>
+  </head>
+
+  <body>
+    <header>
+      
+      <div class="inner">
+        <h1>Russ Tokuyama</h1>
+        
+  
+
+      </div>
+    </header>
+
+    
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          
+  <h1>How I Started With pytest</h1>
+<p><em>Last update: 08/01/2023</em>
+<br><a href="/">Back to home</a>
+<br><a href="/posts/">Back to Posts</a></p>
+<p>While I've known about test-driven development (TDD) for a while, I've always
+had trouble using it consistently. This is my perspective on trying to use TDD
+more often. I'm using Python 3 for the programming language in the examples but
+you should be able to use any programming language.</p>
+<h2>Which tool to use?</h2>
+<p>Python has the <code>unittest</code> module and you start by creating a test class. Run
+<code>python -m unittest</code> to run the tests in your test class. See <a href="https://docs.python.org/3/library/unittest.html">unittest - Unit
+testing framework</a>.</p>
+<p>But, I wanted something a little easier to use. With <code>pytest</code>, you just create a
+test file with your tests in it. Then, run the <code>pytest</code> command. See
+<a href="https://docs.pytest.org/en/6.2.x/getting-started.html">Installation and Getting
+Started</a>.</p>
+<h2>My first test</h2>
+<p>I needed a function that would capitalize the first letter of each word in a
+string composed of words separated by underscores (&quot;_&quot;). For example, I wanted
+to change <em>&quot;body_bytes&quot;</em> to <em>&quot;Body_Bytes&quot;</em>. So, I started with this
+<code>test_capitalize.py</code> file:</p>
+<pre><code class="language-python">def test_capitalize():
+    given = 'body_bytes'
+    want = 'Body_Bytes'
+
+    got = capitalize(given)
+    assert got == want
+</code></pre>
+<p>It has:</p>
+<ul>
+<li>The thing I start with (<em>given</em>)</li>
+<li>The thing I want to end up with (<em>want</em>)</li>
+<li>The function that does what I want (<em>capitalize</em>).</li>
+</ul>
+<p>The test is a simple function that <code>pytest</code> will automatically run. Here's what
+I got when I ran <code>pytest</code>:</p>
+<pre><code>============================= test session starts ==============================
+platform darwin -- Python 3.8.8, pytest-6.2.4, py-1.10.0, pluggy-0.13.1
+rootdir: /Users/russ/Parse_Nginx_Logs
+collected 1 item
+
+test_capitalize.py F                                                     [100%]
+
+=================================== FAILURES ===================================
+_______________________________ test_capitalize ________________________________
+
+    def test_capitalize():
+        given = 'body_bytes'
+        want = 'Body_Bytes'
+
+&gt;       got = capitalize(given)
+E       NameError: name 'capitalize' is not defined
+
+test_capitalize.py:5: NameError
+=========================== short test summary info ============================
+FAILED test_capitalize.py::test_capitalize - NameError: name 'capitalize' is ...
+============================== 1 failed in 0.05s ===============================
+</code></pre>
+<p>This tells me that I haven't written the <code>capitalize</code> function yet.</p>
+<p>While you can put the function to be tested in the test file, it wouldn't be as
+useful as putting it in its own file so that it can be used or reused by other
+code. So, I created a <code>capitalize.py</code> file.</p>
+<pre><code class="language-python">def capitalize(s):
+    &quot;&quot;&quot;Capitalize individual words in a string separated by underscores ('_')&quot;&quot;&quot;
+
+    return &quot;_&quot;.join([w.capitalize() for w in s.split(&quot;_&quot;)])
+</code></pre>
+<p>This is what happened when I ran <code>pytest</code>:</p>
+<pre><code>============================= test session starts ==============================
+platform darwin -- Python 3.8.8, pytest-6.2.4, py-1.10.0, pluggy-0.13.1
+rootdir: /Users/russ/Parse_Nginx_Logs
+collected 1 item
+
+test_capitalize.py F                                                     [100%]
+
+=================================== FAILURES ===================================
+_______________________________ test_capitalize ________________________________
+
+    def test_capitalize():
+        given = 'body_bytes'
+        want = 'Body_Bytes'
+
+&gt;       got = capitalize(given)
+E       NameError: name 'capitalize' is not defined
+
+test_capitalize.py:5: NameError
+=========================== short test summary info ============================
+FAILED test_capitalize.py::test_capitalize - NameError: name 'capitalize' is ...
+============================== 1 failed in 0.05s ===============================
+</code></pre>
+<p>OK, I forgot to tell the test where the capitalize function is defined. So,
+here's how I did that:</p>
+<pre><code class="language-python">from capitalize import *
+
+def test_capitalize():
+    given = 'body_bytes'
+    want = 'Body_Bytes'
+
+    got = capitalize(given)
+    assert got == want
+</code></pre>
+<p>This is what I got when I ran <code>pytest</code>:</p>
+<pre><code>============================= test session starts ==============================
+platform darwin -- Python 3.8.8, pytest-6.2.4, py-1.10.0, pluggy-0.13.1
+rootdir: /Users/russ/Parse_Nginx_Logs
+collected 1 item
+
+test_capitalize.py .                                                     [100%]
+
+============================== 1 passed in 0.02s ===============================
+</code></pre>
+<h2>Call to action</h2>
+<p>Wasn't that easy? So, try it!</p>
+
+
+        </section>
+      </div>
+    </div>
+
+    <footer>
+        
+  <p>&copy; Copyright 2023 by Russ Tokuyama</p>
+
+    </footer>
+
+  </body>
+</html>
