@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css" media="screen" type="text/css">
+    <link rel="stylesheet" href="/assets/css/print.css" media="print" type="text/css">
+
+    <title></title>
+  </head>
+
+  <body>
+    <header>
+      
+      <div class="inner">
+        <h1>Russ Tokuyama</h1>
+        
+  
+
+      </div>
+    </header>
+
+    
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          
+  <h1>Roadmap to updgrade UIPA to Django 4.2 and Python 3.10</h1>
+<p><em>Last update: 10/19/2024</em>
+<br><a href="/">Back to home</a>
+<br><a href="/posts/">Back to Posts</a></p>
+<h2>Status</h2>
+<ul>
+<li><strong>10/18/2024:</strong> Upgraded to Django 1.11.29 and Python 3.8 (3.7 is the highest
+version supported for Django 1.11.29).</li>
+<li><strong>04/28/2024:</strong> Started.</li>
+</ul>
+<h3>Next steps</h3>
+<ul>
+<li>Probably should finish up <em>3</em> and <em>4</em> before tackling <em>6</em>.</li>
+<li><em>5</em> can be pushed out for a while.</li>
+</ul>
+<h2>What is this about?</h2>
+<p>The Public First Law Center (formerly Civil Beat Law Center) wants to get
+UIPA.org on modern, supported versions of Python and Django.</p>
+<p>The site went live on September 2018 using Python 2.7 and Django 1.9. Both are
+have been unsupported for a long time.</p>
+<p>Currently, Code With Aloha is pursuing an
+<a href="https://github.com/orgs/CodeWithAloha/projects/14">upgrade</a> of
+<a href="https://github.com/CodeWithAloha/uipa/wiki">UIPA.org</a> using the latest version
+of Froide using Python 3.10 and Django 4.2.</p>
+<p>This roadmap is an alternate approach to upgrading UIPA.org to Python 3.10 and
+Django 4.2. The newer version of Froide has more feaures that the old
+version. The additional features are not likely to be used by UIPA.org
+users. Additionally, it is not clear what features users currently use. So,
+there is bloat in the software that would be put into production. However, the
+critical problem is that few if any will know:</p>
+<ul>
+<li>What's working?</li>
+<li>What isn't working?</li>
+<li>Are there any problems with the parts that no one knows about?</li>
+</ul>
+<h2>Supported versions of Django and Python</h2>
+<ul>
+<li><a href="https://www.djangoproject.com/download/#supported-versions">Django</a></li>
+<li><a href="https://devguide.python.org/versions/#supported-versions">Python</a></li>
+</ul>
+<table>
+<thead>
+<tr>
+  <th style="text-align:left">Version</th>
+  <th style="text-align:left">Latest Release</th>
+  <th style="text-align:left">End of Support</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Django 4.2 LTS</td>
+  <td style="text-align:left">4.2.16 (09/03/2024)</td>
+  <td style="text-align:left">April 2026</td>
+</tr>
+<tr>
+  <td style="text-align:left">Python 3.10</td>
+  <td style="text-align:left">3.10.15 (09/07/2024)</td>
+  <td style="text-align:left">October 2026</td>
+</tr>
+<tr>
+  <td style="text-align:left">Python 3.12</td>
+  <td style="text-align:left">3.12.7 (10/01/2024)</td>
+  <td style="text-align:left">October 2028</td>
+</tr>
+</tbody>
+</table>
+<h2>Repositories</h2>
+<p>UIPA.org was built from an older version of Froide and Froide Theme. It forked
+the Froide Theme for the UIPA repositories. It also forked Froide because
+FoiRequest module was modified to accommodate mods for asking a requester to
+state why they should have the fees waived.</p>
+<table>
+<thead>
+<tr>
+  <th style="text-align:left">Repositories</th>
+  <th style="text-align:left">URL</th>
+  <th style="text-align:left">Branch</th>
+  <th style="text-align:left">Forked from</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">UIPA</td>
+  <td style="text-align:left">https://github.com/CodeWithAloha/</td>
+  <td style="text-align:left">master</td>
+  <td style="text-align:left">https://github.com/okfde/froide-theme</td>
+</tr>
+<tr>
+  <td style="text-align:left">Froide</td>
+  <td style="text-align:left">https://github.com/CodeWithAloha/froide/</td>
+  <td style="text-align:left">master</td>
+  <td style="text-align:left">https://github.com/okfde/froide</td>
+</tr>
+</tbody>
+</table>
+<h2>Roadmap</h2>
+<ol>
+<li><p>Upgrade Django to 1.11.29 (LTS; last version to support Python 2.7)
+with Python 2.7.15.</p>
+<ul>
+<li><p><strong>Completed:</strong> 10/03/2024</p>
+<ul>
+<li>Can't add public bodies in Admin site.</li>
+<li>Making a request paritally fails when no elasticsearch or solr.</li>
+</ul>
+</li>
+<li><p>https://docs.djangoproject.com/en/1.11/</p>
+</li>
+<li><p>https://docs.djangoproject.com/en/1.11/releases/1.11/ (Release Notes)</p>
+</li>
+<li><p>New in Django 1.11</p>
+<ul>
+<li>Class-based model indexes</li>
+<li>Template-based widget rendering</li>
+<li>Subquery expressions</li>
+</ul>
+</li>
+<li><p>Backwards incompatible changes in Django 1.11</p>
+<ul>
+<li>GDAL is a required dependency</li>
+<li>Dropped support for PostgreSQL 9.2 and PostGIS 2.0</li>
+<li>pytz is a required dependency</li>
+<li>get_model() and get_models() now raise AppRegistryNotReady if
+they’re called before models of all applications have been loaded.
+If you need the old behavior of get_model(), set the require_ready
+argument to False.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Upgrade Python to 3.7 (highest supported by Django 1.11.17).</p>
+<ul>
+<li><strong>Completed:</strong> 10/08/2024<ul>
+<li>Search is working with elasticsearch and django-haystack (supports
+only up to elasticsearch 2.x).</li>
+<li>No pysolr/Solr.</li>
+<li>2to3 refactorings.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Upgrade Python to 3.8</p>
+<ul>
+<li><strong>Mostly Completed:</strong> 10/14/2024</li>
+<li>Does work with Django 1.11.17.</li>
+<li>No longer supported as of 10/07/2024.</li>
+<li>TODO:<ul>
+<li>Install GDAL, postgis, and libgeoip for django-floppyforms or not.<ul>
+<li>If don't need the GIS stuff, see:
+https://github.com/jazzband/django-floppyforms/issues/189#issuecomment-379546682</li>
+</ul>
+</li>
+<li>Create test plan and tests because there are major changes with Django
+2.0.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><del>Set up Postfix in a Docker container.</del> Create local test mail server.</p>
+<ul>
+<li><strong>Created test mail server program:</strong> 10/18/2024; see
+<a href="https://github.com/russtoku/test-mail-server">https://github.com/russtoku/test-mail-server</a></li>
+<li>TODO:<ul>
+<li>Send outgoing from UIPA to it.</li>
+<li>Pull incoming email to UIPA from it.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Figure out deployment for production.</p>
+<ul>
+<li>What are the pieces?</li>
+</ul>
+</li>
+<li><p>Upgrade Django to 2.0.13 (needs Python 3.4+).</p>
+<ul>
+<li><p>https://docs.djangoproject.com/en/2.0/releases/2.0/</p>
+</li>
+<li><p>Run with <code>-Wa</code> to show deprecations.</p>
+</li>
+<li><p>New in Django 2.0</p>
+<ul>
+<li>django.urls.path() function allows a simpler, more readable URL
+routing syntax</li>
+<li>django.conf.urls.url() function from previous versions is now
+available as django.urls.re_path()</li>
+<li>Mobile-friendly contrib.admin</li>
+<li>runserver Web server supports HTTP 1.1</li>
+</ul>
+</li>
+<li><p>Backwards incompatible changes in Django 1.11</p>
+<ul>
+<li>Removed support for bytestrings in some places</li>
+<li>Form fields no longer accept optional arguments as positional
+arguments</li>
+<li>Indexes no longer accept positional arguments</li>
+<li>Foreign key constraints are now enabled on SQLite<ul>
+<li>Should fix a problem when loading fixtures.</li>
+<li>Fixed a schema corruption issue on SQLite 3.26+. You might have
+to drop and rebuild your SQLite database if you applied
+a migration while using an older version of Django with SQLite
+3.26 or later (#29182). [Django 2.0.10]</li>
+</ul>
+</li>
+<li>default HTTP error handlers (handler404, etc.) are now callables
+instead of dotted Python path strings</li>
+</ul>
+</li>
+<li><p>Features removed in Django 2.0</p>
+<ul>
+<li>django.core.urlresolvers module is removed in favor of its new
+location, django.urls</li>
+<li>Using User.is_authenticated() and User.is_anonymous() as methods
+rather than properties is no longer supported</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Upgrade Django to 2.115.</p>
+</li>
+<li><p>Upgrade Django to 2.2.28 (supports Python 3.9) so we can use
+https://github.com/adamchainz/django-upgrade.</p>
+</li>
+<li><p>Upgrade Python to 3.9 (highest supported by Django 2.2.17).</p>
+</li>
+<li><p>Upgrade Django to 3.0.14 (needs Python 3.6+, supports 3.9 as of 3.0.11).</p>
+<ul>
+<li>ASGI support</li>
+<li>Model.save() no longer attempts to find a row when saving a new Model
+instance and a default value for the primary key is provided, and
+always performs a single INSERT query</li>
+<li>Removed private Python 2 compatibility APIs</li>
+<li>New default value for the FILE_UPLOAD_PERMISSIONS setting</li>
+<li>New default values for security settings</li>
+</ul>
+</li>
+<li><p>Upgrade Django to 3.1.14 (needs Python 3.6+, supports 3.9 as of 3.1.3).</p>
+<ul>
+<li>Asynchronous views and middleware support</li>
+<li>JSONField for all supported database backends</li>
+</ul>
+</li>
+<li><p>Upgrade Django to 3.2.25 (needs Python 3.6+, supports 3.10 as of 3.2.9).</p>
+<ul>
+<li>Automatic AppConfig discovery</li>
+<li>django.core.paginator.Paginator.get_elided_page_range() method
+allows generating a page range with some of the values elided</li>
+<li>Response headers are now stored in HttpResponse.headers</li>
+</ul>
+</li>
+<li><p>Upgrade Python to 3.10 (highest supported by Django 3.2.9).</p>
+</li>
+<li><p>Upgrade Django to 4.0.10 (needs Python 3.8+)</p>
+<ul>
+<li>Python standard library’s zoneinfo is now the default timezone
+implementation</li>
+<li>scrypt password hasher</li>
+<li>Forms, Formsets, and ErrorList are now rendered using the template
+engine to enhance customization</li>
+<li>admin/base.html template now has a new block header which contains
+the admin site header</li>
+<li>ManifestStaticFilesStorage now replaces paths to JavaScript source
+map references with their hashed counterparts<ul>
+<li>Can use ViteJS now?</li>
+</ul>
+</li>
+<li>runserver management command now supports the --skip-checks option</li>
+<li>new stdout argument for pre_migrate() and post_migrate() signals
+allows redirecting output to a stream-like object. It should be
+preferred over sys.stdout and print() when emitting verbose output in
+order to allow proper capture when testing</li>
+<li>Dropped support for PostgreSQL 9.6</li>
+</ul>
+</li>
+<li><p>Upgrade Django to 4.1.13 (needs Python 3.8+, support 3.11 as of 4.1.3)</p>
+<ul>
+<li>Asynchronous handlers for class-based views</li>
+<li>Asynchronous ORM interface</li>
+<li>Check, unique, and exclusion constraints defined in the
+Meta.constraints option are now checked during model validation</li>
+<li>Form rendering accessibility</li>
+<li>ManifestStaticFilesStorage now replaces paths to CSS source map
+references with their hashed counterparts</li>
+<li>Dropped support for PostgreSQL 10</li>
+<li>default_app_config application configuration variable is removed</li>
+</ul>
+</li>
+<li><p>Upgrade Django to 4.2 (needs Python 3.8+, support 3.12 as of 4.2.8)</p>
+<ul>
+<li>Psycopg 3 support; psycopg 3 introduces some breaking changes over
+psycopg2</li>
+<li>Dropped support for PostgreSQL 11</li>
+<li>to avoid updating unnecessary columns, QuerySet.update_or_create()
+now passes update_fields to the Model.save() calls</li>
+<li>undocumented django.http.multipartparser.parse_header() function is
+removed. Use django.utils.http.parse_header_parameters() instead</li>
+</ul>
+</li>
+<li><p>Upgrade Python to 3.12 (highest supported by Django 4.2.8).</p>
+</li>
+</ol>
+<h2>Error loading User model (06/04/2024)</h2>
+<h3>FIXED!</h3>
+<p>This problem is due to the Froide account User model trying to provide a method
+to return the SetPasswordForm for the views. The fix is to remove
+SetPasswordForm from froide/account/models.py and add it to
+froide/account/views.py.</p>
+<p>When trying to upgrade Django from 1.10.2 (last working UIPA) to 1.11, running
+&quot;python manage.py check&quot; fails with an error about the &quot;AUTH_USER_MODEL refers
+to model 'account.User' that has not been installed&quot;. This is prevent further
+progress in upgrading Django and Python.</p>
+<p>The final conclusion is the old UIPA can't be upgraded so a new UIPA will need
+to be created with the current version of Froide.</p>
+<p>It is possible to change the use of Froide from an installed source dependency
+to being a part of the UIPA (Froide Theme) code base. This may make it easier
+to mold the newer Froide (Django 4.2) to what UIPA needs by removing froide
+apps that may not be useful.</p>
+<pre><code>(venv2) uipa (upgrade-master)$ python manage.py check
+Traceback (most recent call last):
+  File &quot;manage.py&quot;, line 11, in &lt;module&gt;
+    execute_from_command_line(sys.argv)
+  File &quot;/Users/russ/Projects/Code_With_Aloha/Code_for_Hawaii/update-old/last_working/uipa/venv2/lib/python2.7/site-packages/django/core/management/__init__.py&quot;, line 363, in execute_from_command_line
+    utility.execute()
+  File &quot;/Users/russ/Projects/Code_With_Aloha/Code_for_Hawaii/update-old/last_working/uipa/venv2/lib/python2.7/site-packages/django/core/management/__init__.py&quot;, line 337, in execute
+    django.setup()
+  File &quot;/Users/russ/Projects/Code_With_Aloha/Code_for_Hawaii/update-old/last_working/uipa/venv2/lib/python2.7/site-packages/django/__init__.py&quot;, line 27, in setup
+    apps.populate(settings.INSTALLED_APPS)
+  File &quot;/Users/russ/Projects/Code_With_Aloha/Code_for_Hawaii/update-old/last_working/uipa/venv2/lib/python2.7/site-packages/django/apps/registry.py&quot;, line 108, in populate
+    app_config.import_models()
+  File &quot;/Users/russ/Projects/Code_With_Aloha/Code_for_Hawaii/update-old/last_working/uipa/venv2/lib/python2.7/site-packages/django/apps/config.py&quot;, line 202, in import_models
+    self.models_module = import_module(models_module_name)
+  File &quot;/Users/russ/micromamba/envs/py2/lib/python2.7/importlib/__init__.py&quot;, line 37, in import_module
+    __import__(name)
+  File &quot;/Users/russ/Projects/Code_With_Aloha/Code_for_Hawaii/update-old/last_working/uipa/froide/account/models.py&quot;, line 18, in &lt;module&gt;
+    from django.contrib.auth.forms import SetPasswordForm
+  File &quot;/Users/russ/Projects/Code_With_Aloha/Code_for_Hawaii/update-old/last_working/uipa/venv2/lib/python2.7/site-packages/django/contrib/auth/forms.py&quot;, line 22, in &lt;module&gt;
+    UserModel = get_user_model()
+  File &quot;/Users/russ/Projects/Code_With_Aloha/Code_for_Hawaii/update-old/last_working/uipa/venv2/lib/python2.7/site-packages/django/contrib/auth/__init__.py&quot;, line 194, in get_user_model
+    &quot;AUTH_USER_MODEL refers to model '%s' that has not been installed&quot; % settings.AUTH_USER_MODEL
+django.core.exceptions.ImproperlyConfigured: AUTH_USER_MODEL refers to model 'account.User' that has not been installed
+</code></pre>
+
+
+        </section>
+      </div>
+    </div>
+
+    <footer>
+        
+  <p>&copy; Copyright 2024 by Russ Tokuyama</p>
+
+    </footer>
+
+  </body>
+</html>

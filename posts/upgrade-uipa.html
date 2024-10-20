@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css" media="screen" type="text/css">
+    <link rel="stylesheet" href="/assets/css/print.css" media="print" type="text/css">
+
+    <title></title>
+  </head>
+
+  <body>
+    <header>
+      
+      <div class="inner">
+        <h1>Russ Tokuyama</h1>
+        
+  
+
+      </div>
+    </header>
+
+    
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          
+  <h1>Thoughts on the initiative to upgrade UIPA.org</h1>
+<p><em>Last update: 07/03/2024</em>
+<br><a href="/">Back to home</a>
+<br><a href="/posts/">Back to Posts</a></p>
+<h2>Abstract</h2>
+<p>How does one go about upgrading a working website? While many strategies are
+available, selecting one that will get the job done is difficult because &quot;you
+don't know what you don't know&quot;. Advice is plentiful and readily available but
+it's of no use for the same reason.</p>
+<p>I writing about my idea for an approach that follows the guidelines of:</p>
+<ul>
+<li>&quot;Keep it simple.&quot;</li>
+<li>&quot;Less is more.&quot;</li>
+<li>&quot;what problem are we trying to solve?&quot;</li>
+</ul>
+<h2>Background</h2>
+<p>In 2016, I got involved with Code for Hawaii and did a tiny amount of work on
+one small part of the <a href="https://uipa.org/">UIPA.org</a> website.</p>
+<p>UIPA.org is a website where citizens can request information from a government
+agency. The website stores the requests and helps with the interaction with the
+agencies. This is known as a freedom of information portal. In Hawaii, the
+freedom of information law is the <a href="https://oip.hawaii.gov/laws-rules-opinions/uipa/">Uniform Information Practices Act (UIPA),
+HRS Chapter 92F</a>, which
+requires open access to government records. Hence the name UIPA.org which the
+Public First Law Center runs. It has some information about <a href="https://publicfirst.wpenginepowered.com/uipa-requests/">requesting public
+records</a> which
+describes the process of requesting records.</p>
+<p>The software for UIPA.org was built upon the open source
+<a href="https://froide.readthedocs.io/en/latest/">Froide</a> portal which is used by
+<a href="https://fragdenstaat.de/">Frag den Staat</a>, the German Freedom of Information
+Portal.</p>
+<p>UIPA.org went live in September 2018. By then, I had dropped out of any
+involvement with Code for Hawaii. From then to now (2024), Code for Hawaii went
+through some changes and became <a href="https://codewithaloha.org/">Code With Aloha</a>
+but UIPA.org's software was never touched after being launched. The person that
+spearheaded the development of UIPA.org dropped out and prefers not to get
+involved again.</p>
+<p>New organizers of Code With Aloha met with the Public First Law Center's
+executive director, Brian Black, to discuss getting the software updated. Newer
+versions of Python and Django at the very least. There is a newer version of
+Froide. Of course, there are newer version of the dependencies. Lots of moving
+pieces. What to do?</p>
+<p>So, how can UIPA.org be brought up to modern times?</p>
+<p>Code With Aloha has an initiative called <a href="https://github.com/CodeWithAloha/uipa/issues/43">A new and improved
+UIPA.org</a> on their <a href="https://github.com/orgs/CodeWithAloha/projects/14">UIPA.org
+Development Board</a>.</p>
+<p>This post is about exploring different choices. I want to see if ideas that
+I've come across in the 35+ years of working in the IT industry are helpful.</p>
+<h2>A path of discovery</h2>
+<p>I tend to agree with the Zen of Python that simpler is better and explicit
+is better. The problems that I've had writing or fixing software have to do
+with not knowing what's supposed to be done. I use to ask one of my project
+managers, &quot;What does done look like?&quot;. That would always make her angry, like
+&quot;Don't you know?&quot;.</p>
+<p>Of course not! If it's not spelled explicitly you're leaving too much to change
+and almost guaranteeing failure.</p>
+<p>This was the first thing that I experienced when I officially became an software
+developer (job title: programmer analyst). At the end of the first interview
+with a client about what the scope of work would be, he asked me when it would
+be done. He had just rattled off a high level description of what the new system
+was to do.</p>
+<p>Of course, I couldn't give him an answer because I didn't know specifically
+what would be needed. He wasn't able to provide much more detail. &quot;Shouldn't he
+have known better since he had been in IT before?&quot;, I wondered to myself.</p>
+<p>Since then I've been trying to figure out a better way to develop computer
+systems, making sure that they do what the client needs, and getting it to them
+in a reasonable time.</p>
+<p>The way forward is like an explorer trying to get to some destination that
+no one's been to before. This is what software development is really like
+because when you want to modify code, most of the time you're hoping that it
+works. You're also hoping that it's going to get you where you think you should
+be.</p>
+<p>My goal with this post is to describe an alternate path to take and report back
+whether or not that path reached the intended destination, a <em>new and improved
+UIPA.org</em>.</p>
+<h2>Initial forays</h2>
+<p>One of the first things that I try to do with existing software is to try to
+run it. With modern version control systems like <em>git</em>, this is fairly easy.
+Just clone the repo and follow the instructions if any. Of course, things don't
+always work; not even the tenth time or ever. There are various reasons but I'm not
+going to talk about that.</p>
+<p>Assuming things do run then you're faced with <em>what problem are we trying to
+solve?</em>. Often, what someone says is the problem isn't detailed enough to
+clearly state what done looks like. You need to know the difference between
+<em>need</em>, <em>should</em>, and <em>want</em> is.</p>
+<h3>Upgrade Django</h3>
+<p>I tried to see if the UIPA.org code be run with Django 4.x instead of 1.10.2.
+Didn't work. I got an error that I couldn't resolve at that time. Definitely
+a show-stopper.</p>
+<h3>Make a roadmap</h3>
+<p>I quickly read through the release notes for the Django versions
+from 1.11 to 4.2 and made a <a href="/uipa-roadmap.html">roadmap</a> of what things might change or pitfalls
+that I might encounter.</p>
+<h3>Just upgrade to the next version</h3>
+<p>OK, take things one step at a time. I tried to see if I could fix things and get
+Django 1.11 to work with UIPA.org. Didn't work. There was that same error that
+I couldn't figure out and web searches didn't help. I gave up and didn't dive
+deeper into the code.</p>
+<p>However, since that time I finally figured out how to fix that error and have
+upgraded to Django
+1.11.17 with Python 3.8.</p>
+<h2>It seems to work for Code With Aloha</h2>
+<p>Tyler Chong with Code With Aloha was able to get a new version of Froide
+working but he didn't know that UIPA.org is based on using a Froide Theme and
+not directly on Froide. He was able to make that change so that what's in the
+<a href="https://github.com/CodeWithAloha/uipa">uipa repo</a> runs with something that
+looks what a <em>new and improved UIPA.org</em> would look like. So that's the
+starting point of the initiative.</p>
+<h2>Oh, they're apps. Not!</h2>
+<p>For those of you who aren't familiar with Django, a Django website is
+usually made up of one or more <em>apps</em> where an <em>app</em> provides a reusable amount
+of functionality. This should allow you to have modular pieces that you can mix
+and match and reuse for new websites.</p>
+<p>The newer version of Froide has more functionality than the old one that
+UIPA.org uses. The newer version has features like campaigns, GEO locations,
+payments, and more. However, I'm skeptical that going with the newer version is
+a good idea because it's not clear what should be done with the new
+functionality. Should they be hidden? Should they be removed?</p>
+<p>I tried removing one new functionality by changing the Django <code>INSTALLED_APPS</code>
+configuration. Didn't work. The new functionality was mixed into existing
+<em>apps</em>. You can't just leave one out because the other ones may depend on it.</p>
+<p>Another thing is the idea of a themeable Django <em>app</em>. This means that you pull
+in another Django project as a library dependency and your project overrides the
+look and feel of the dependency. Froide has a Froide Theme that is supposed to
+be used as the project to build your website on top of. The Froide Theme then
+installs Froide as a dependency when you run <code>pip install -r requirements.txt</code>.</p>
+<p>For Hawaii, the form provided by the Office of Information Practices has
+a section where the requester can ask for a waiver of the fees for the office
+preparing the information for the request. To handle this requirement, Froide
+was modified to change the way that information requests are made by a user.
+I won't discuss how this was done but will leave things at it's more complicated
+than it needs to be. I will also not say anything about Froide being installed
+as an editable dependency.</p>
+<p>While Froide is broken out into what looks like <em>apps</em> and must be configured
+like <em>apps</em>, that doesn't mean that you can leave any out of the
+<code>INSTALLED_APPS</code> list and things will still work. It's not modular,
+mix-and-match.</p>
+<h2>Back to the beginning</h2>
+<p>So, where does one start?</p>
+<p>In Alice in Wonderland, Lewis Caroll writes:</p>
+<blockquote>
+<p>&quot;If you don't know where you want to go, then it doesn't matter which path you
+take.&quot;</p>
+</blockquote>
+<h3>The beginning?</h3>
+<p>The beginning is &quot;what problem are we trying to solve&quot;. Well, that's easy! <em>A
+new and improved UIPA.org</em>! That's not enough. What does that mean?</p>
+<p>Newer versions of the software bill of materials (SBOM). That's not enough.</p>
+<p>We've got to go further back to the desired functionality.</p>
+<h2>What does it do?</h2>
+<p>Instead of talking about implementation details, let's consider what a citizen
+wants UIPA.org to help them <strong>get done</strong>. These are typically referred to as the
+functionality. Traditionally, they are captured as the <em>functional
+requirements</em>.</p>
+<p>There are various tools and techniques for gathering the functional
+requirements such as user stories, user mapping, process mapping, etc.</p>
+<p>I think the most basic technique is to map out what a person does when they are
+trying to get something done. That means identifying:</p>
+<ul>
+<li>What are they trying to get &quot;done&quot;?</li>
+<li>What pieces of information do they need to have?</li>
+<li>What steps do they need to take?</li>
+<li>What things does the system do when the user isn't directly interacting with
+it?</li>
+</ul>
+<p>For websites, it's good to have a sitemap. In its simplest form, this is a list
+of pages (helps to have a name and short description of what it is or does) and
+the connections between them. Typically, it's represented by a drawing of boxes
+and lines that connect them from top (home page) to the lowest (or farthest
+away from the home page) pages.</p>
+<h2>So what now?</h2>
+<p>My desire has always been to help out as best as I can. I admit that I don't
+know what that should be.</p>
+<p>I do think that an alternate approach that has just as much chance of success is
+to start to upgrade Django and Python to modern supported version and modify the
+old UIPA and Froide software to work with the new versions. That's not easy
+because there are dependencies for the libraries that Froide and UIPA require.</p>
+<p>I have a <a href="/uipa-roadmap.html">roadmap</a> for this alternate path.  I'm going to
+purse it while the others follow the mainstream. As I go, I'll update the status
+of things on the roadmap and write more posts about my experiences. I will also
+be helping out the mainstream effort.</p>
+
+
+        </section>
+      </div>
+    </div>
+
+    <footer>
+        
+  <p>&copy; Copyright 2024 by Russ Tokuyama</p>
+
+    </footer>
+
+  </body>
+</html>
