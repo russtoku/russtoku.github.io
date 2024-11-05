@@ -30,8 +30,8 @@
           
   <h1>Roadmap to updgrade UIPA to Django 4.2 and Python 3.10</h1>
 <p><em>Last update: 10/19/2024</em>
-<br><a href="/">Back to home</a>
-<br><a href="/posts/">Back to Posts</a></p>
+&lt;br&gt;<a href="/">Back to home</a>
+&lt;br&gt;<a href="/posts/">Back to Posts</a></p>
 <h2>Status</h2>
 <ul>
 <li><strong>10/18/2024:</strong> Upgraded to Django 1.11.29 and Python 3.8 (3.7 is the highest
@@ -44,8 +44,9 @@ version supported for Django 1.11.29).</li>
 <li><em>5</em> can be pushed out for a while.</li>
 </ul>
 <h2>What is this about?</h2>
-<p>The Public First Law Center (formerly Civil Beat Law Center) wants to get
-UIPA.org on modern, supported versions of Python and Django.</p>
+<p>The <a href="https://www.publicfirstlaw.org/">Public First Law Center</a> (formerly Civil
+Beat Law Center) wants to get UIPA.org on modern, supported versions of Python
+and Django.</p>
 <p>The site went live on September 2018 using Python 2.7 and Django 1.9. Both are
 have been unsupported for a long time.</p>
 <p>Currently, Code With Aloha is pursuing an
@@ -345,30 +346,30 @@ to be created with the current version of Froide.</p>
 to being a part of the UIPA (Froide Theme) code base. This may make it easier
 to mold the newer Froide (Django 4.2) to what UIPA needs by removing froide
 apps that may not be useful.</p>
-<pre><code>(venv2) uipa (upgrade-master)$ python manage.py check
-Traceback (most recent call last):
-  File &quot;manage.py&quot;, line 11, in &lt;module&gt;
-    execute_from_command_line(sys.argv)
-  File &quot;/Users/russ/Projects/Code_With_Aloha/Code_for_Hawaii/update-old/last_working/uipa/venv2/lib/python2.7/site-packages/django/core/management/__init__.py&quot;, line 363, in execute_from_command_line
-    utility.execute()
-  File &quot;/Users/russ/Projects/Code_With_Aloha/Code_for_Hawaii/update-old/last_working/uipa/venv2/lib/python2.7/site-packages/django/core/management/__init__.py&quot;, line 337, in execute
-    django.setup()
-  File &quot;/Users/russ/Projects/Code_With_Aloha/Code_for_Hawaii/update-old/last_working/uipa/venv2/lib/python2.7/site-packages/django/__init__.py&quot;, line 27, in setup
-    apps.populate(settings.INSTALLED_APPS)
-  File &quot;/Users/russ/Projects/Code_With_Aloha/Code_for_Hawaii/update-old/last_working/uipa/venv2/lib/python2.7/site-packages/django/apps/registry.py&quot;, line 108, in populate
-    app_config.import_models()
-  File &quot;/Users/russ/Projects/Code_With_Aloha/Code_for_Hawaii/update-old/last_working/uipa/venv2/lib/python2.7/site-packages/django/apps/config.py&quot;, line 202, in import_models
-    self.models_module = import_module(models_module_name)
-  File &quot;/Users/russ/micromamba/envs/py2/lib/python2.7/importlib/__init__.py&quot;, line 37, in import_module
-    __import__(name)
-  File &quot;/Users/russ/Projects/Code_With_Aloha/Code_for_Hawaii/update-old/last_working/uipa/froide/account/models.py&quot;, line 18, in &lt;module&gt;
-    from django.contrib.auth.forms import SetPasswordForm
-  File &quot;/Users/russ/Projects/Code_With_Aloha/Code_for_Hawaii/update-old/last_working/uipa/venv2/lib/python2.7/site-packages/django/contrib/auth/forms.py&quot;, line 22, in &lt;module&gt;
-    UserModel = get_user_model()
-  File &quot;/Users/russ/Projects/Code_With_Aloha/Code_for_Hawaii/update-old/last_working/uipa/venv2/lib/python2.7/site-packages/django/contrib/auth/__init__.py&quot;, line 194, in get_user_model
-    &quot;AUTH_USER_MODEL refers to model '%s' that has not been installed&quot; % settings.AUTH_USER_MODEL
-django.core.exceptions.ImproperlyConfigured: AUTH_USER_MODEL refers to model 'account.User' that has not been installed
-</code></pre>
+<div class="highlight"><pre><span></span><span class="o">(</span>venv2<span class="o">)</span><span class="w"> </span>uipa<span class="w"> </span><span class="o">(</span>upgrade-master<span class="o">)</span>$<span class="w"> </span>python<span class="w"> </span>manage.py<span class="w"> </span>check
+Traceback<span class="w"> </span><span class="o">(</span>most<span class="w"> </span>recent<span class="w"> </span>call<span class="w"> </span>last<span class="o">)</span>:
+<span class="w">  </span>File<span class="w"> </span><span class="s2">&quot;manage.py&quot;</span>,<span class="w"> </span>line<span class="w"> </span><span class="m">11</span>,<span class="w"> </span><span class="k">in</span><span class="w"> </span>&lt;module&gt;
+<span class="w">    </span>execute_from_command_line<span class="o">(</span>sys.argv<span class="o">)</span>
+<span class="w">  </span>File<span class="w"> </span><span class="s2">&quot;/Users/russ/Projects/Code_With_Aloha/Code_for_Hawaii/update-old/last_working/uipa/venv2/lib/python2.7/site-packages/django/core/management/__init__.py&quot;</span>,<span class="w"> </span>line<span class="w"> </span><span class="m">363</span>,<span class="w"> </span><span class="k">in</span><span class="w"> </span>execute_from_command_line
+<span class="w">    </span>utility.execute<span class="o">()</span>
+<span class="w">  </span>File<span class="w"> </span><span class="s2">&quot;/Users/russ/Projects/Code_With_Aloha/Code_for_Hawaii/update-old/last_working/uipa/venv2/lib/python2.7/site-packages/django/core/management/__init__.py&quot;</span>,<span class="w"> </span>line<span class="w"> </span><span class="m">337</span>,<span class="w"> </span><span class="k">in</span><span class="w"> </span>execute
+<span class="w">    </span>django.setup<span class="o">()</span>
+<span class="w">  </span>File<span class="w"> </span><span class="s2">&quot;/Users/russ/Projects/Code_With_Aloha/Code_for_Hawaii/update-old/last_working/uipa/venv2/lib/python2.7/site-packages/django/__init__.py&quot;</span>,<span class="w"> </span>line<span class="w"> </span><span class="m">27</span>,<span class="w"> </span><span class="k">in</span><span class="w"> </span>setup
+<span class="w">    </span>apps.populate<span class="o">(</span>settings.INSTALLED_APPS<span class="o">)</span>
+<span class="w">  </span>File<span class="w"> </span><span class="s2">&quot;/Users/russ/Projects/Code_With_Aloha/Code_for_Hawaii/update-old/last_working/uipa/venv2/lib/python2.7/site-packages/django/apps/registry.py&quot;</span>,<span class="w"> </span>line<span class="w"> </span><span class="m">108</span>,<span class="w"> </span><span class="k">in</span><span class="w"> </span>populate
+<span class="w">    </span>app_config.import_models<span class="o">()</span>
+<span class="w">  </span>File<span class="w"> </span><span class="s2">&quot;/Users/russ/Projects/Code_With_Aloha/Code_for_Hawaii/update-old/last_working/uipa/venv2/lib/python2.7/site-packages/django/apps/config.py&quot;</span>,<span class="w"> </span>line<span class="w"> </span><span class="m">202</span>,<span class="w"> </span><span class="k">in</span><span class="w"> </span>import_models
+<span class="w">    </span>self.models_module<span class="w"> </span><span class="o">=</span><span class="w"> </span>import_module<span class="o">(</span>models_module_name<span class="o">)</span>
+<span class="w">  </span>File<span class="w"> </span><span class="s2">&quot;/Users/russ/micromamba/envs/py2/lib/python2.7/importlib/__init__.py&quot;</span>,<span class="w"> </span>line<span class="w"> </span><span class="m">37</span>,<span class="w"> </span><span class="k">in</span><span class="w"> </span>import_module
+<span class="w">    </span>__import__<span class="o">(</span>name<span class="o">)</span>
+<span class="w">  </span>File<span class="w"> </span><span class="s2">&quot;/Users/russ/Projects/Code_With_Aloha/Code_for_Hawaii/update-old/last_working/uipa/froide/account/models.py&quot;</span>,<span class="w"> </span>line<span class="w"> </span><span class="m">18</span>,<span class="w"> </span><span class="k">in</span><span class="w"> </span>&lt;module&gt;
+<span class="w">    </span>from<span class="w"> </span>django.contrib.auth.forms<span class="w"> </span>import<span class="w"> </span>SetPasswordForm
+<span class="w">  </span>File<span class="w"> </span><span class="s2">&quot;/Users/russ/Projects/Code_With_Aloha/Code_for_Hawaii/update-old/last_working/uipa/venv2/lib/python2.7/site-packages/django/contrib/auth/forms.py&quot;</span>,<span class="w"> </span>line<span class="w"> </span><span class="m">22</span>,<span class="w"> </span><span class="k">in</span><span class="w"> </span>&lt;module&gt;
+<span class="w">    </span><span class="nv">UserModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>get_user_model<span class="o">()</span>
+<span class="w">  </span>File<span class="w"> </span><span class="s2">&quot;/Users/russ/Projects/Code_With_Aloha/Code_for_Hawaii/update-old/last_working/uipa/venv2/lib/python2.7/site-packages/django/contrib/auth/__init__.py&quot;</span>,<span class="w"> </span>line<span class="w"> </span><span class="m">194</span>,<span class="w"> </span><span class="k">in</span><span class="w"> </span>get_user_model
+<span class="w">    </span><span class="s2">&quot;AUTH_USER_MODEL refers to model &#39;%s&#39; that has not been installed&quot;</span><span class="w"> </span>%<span class="w"> </span>settings.AUTH_USER_MODEL
+django.core.exceptions.ImproperlyConfigured:<span class="w"> </span>AUTH_USER_MODEL<span class="w"> </span>refers<span class="w"> </span>to<span class="w"> </span>model<span class="w"> </span><span class="s1">&#39;account.User&#39;</span><span class="w"> </span>that<span class="w"> </span>has<span class="w"> </span>not<span class="w"> </span>been<span class="w"> </span>installed
+</pre></div>
 
 
         </section>

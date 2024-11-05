@@ -30,8 +30,8 @@
           
   <h1>How I Started With pytest</h1>
 <p><em>Last update: 08/01/2023</em>
-<br><a href="/">Back to home</a>
-<br><a href="/posts/">Back to Posts</a></p>
+&lt;br&gt;<a href="/">Back to home</a>
+&lt;br&gt;<a href="/posts/">Back to Posts</a></p>
 <p>While I've known about test-driven development (TDD) for a while, I've always
 had trouble using it consistently. This is my perspective on trying to use TDD
 more often. I'm using Python 3 for the programming language in the examples but
@@ -49,13 +49,13 @@ Started</a>.</p>
 string composed of words separated by underscores (&quot;_&quot;). For example, I wanted
 to change <em>&quot;body_bytes&quot;</em> to <em>&quot;Body_Bytes&quot;</em>. So, I started with this
 <code>test_capitalize.py</code> file:</p>
-<pre><code class="language-python">def test_capitalize():
-    given = 'body_bytes'
-    want = 'Body_Bytes'
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_capitalize</span><span class="p">():</span>
+    <span class="n">given</span> <span class="o">=</span> <span class="s1">&#39;body_bytes&#39;</span>
+    <span class="n">want</span> <span class="o">=</span> <span class="s1">&#39;Body_Bytes&#39;</span>
 
-    got = capitalize(given)
-    assert got == want
-</code></pre>
+    <span class="n">got</span> <span class="o">=</span> <span class="n">capitalize</span><span class="p">(</span><span class="n">given</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">got</span> <span class="o">==</span> <span class="n">want</span>
+</pre></div>
 <p>It has:</p>
 <ul>
 <li>The thing I start with (<em>given</em>)</li>
@@ -64,81 +64,81 @@ to change <em>&quot;body_bytes&quot;</em> to <em>&quot;Body_Bytes&quot;</em>. So
 </ul>
 <p>The test is a simple function that <code>pytest</code> will automatically run. Here's what
 I got when I ran <code>pytest</code>:</p>
-<pre><code>============================= test session starts ==============================
-platform darwin -- Python 3.8.8, pytest-6.2.4, py-1.10.0, pluggy-0.13.1
-rootdir: /Users/russ/Parse_Nginx_Logs
-collected 1 item
+<div class="highlight"><pre><span></span><span class="o">=============================</span><span class="w"> </span><span class="nb">test</span><span class="w"> </span>session<span class="w"> </span><span class="nv">starts</span><span class="w"> </span><span class="o">==============================</span>
+platform<span class="w"> </span>darwin<span class="w"> </span>--<span class="w"> </span>Python<span class="w"> </span><span class="m">3</span>.8.8,<span class="w"> </span>pytest-6.2.4,<span class="w"> </span>py-1.10.0,<span class="w"> </span>pluggy-0.13.1
+rootdir:<span class="w"> </span>/Users/russ/Parse_Nginx_Logs
+collected<span class="w"> </span><span class="m">1</span><span class="w"> </span>item
 
-test_capitalize.py F                                                     [100%]
+test_capitalize.py<span class="w"> </span>F<span class="w">                                                     </span><span class="o">[</span><span class="m">100</span>%<span class="o">]</span>
 
-=================================== FAILURES ===================================
-_______________________________ test_capitalize ________________________________
+<span class="o">===================================</span><span class="w"> </span><span class="nv">FAILURES</span><span class="w"> </span><span class="o">===================================</span>
+_______________________________<span class="w"> </span>test_capitalize<span class="w"> </span>________________________________
 
-    def test_capitalize():
-        given = 'body_bytes'
-        want = 'Body_Bytes'
+<span class="w">    </span>def<span class="w"> </span>test_capitalize<span class="o">()</span>:
+<span class="w">        </span><span class="nv">given</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;body_bytes&#39;</span>
+<span class="w">        </span><span class="nv">want</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Body_Bytes&#39;</span>
 
-&gt;       got = capitalize(given)
-E       NameError: name 'capitalize' is not defined
+&gt;<span class="w">       </span><span class="nv">got</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>capitalize<span class="o">(</span>given<span class="o">)</span>
+E<span class="w">       </span>NameError:<span class="w"> </span>name<span class="w"> </span><span class="s1">&#39;capitalize&#39;</span><span class="w"> </span>is<span class="w"> </span>not<span class="w"> </span>defined
 
-test_capitalize.py:5: NameError
-=========================== short test summary info ============================
-FAILED test_capitalize.py::test_capitalize - NameError: name 'capitalize' is ...
-============================== 1 failed in 0.05s ===============================
-</code></pre>
+test_capitalize.py:5:<span class="w"> </span><span class="nv">NameError</span>
+<span class="o">===========================</span><span class="w"> </span>short<span class="w"> </span><span class="nb">test</span><span class="w"> </span>summary<span class="w"> </span><span class="nv">info</span><span class="w"> </span><span class="o">============================</span>
+FAILED<span class="w"> </span>test_capitalize.py::test_capitalize<span class="w"> </span>-<span class="w"> </span>NameError:<span class="w"> </span>name<span class="w"> </span><span class="s1">&#39;capitalize&#39;</span><span class="w"> </span>is<span class="w"> </span>...
+<span class="o">==============================</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>failed<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.05s<span class="w"> </span><span class="o">===============================</span>
+</pre></div>
 <p>This tells me that I haven't written the <code>capitalize</code> function yet.</p>
 <p>While you can put the function to be tested in the test file, it wouldn't be as
 useful as putting it in its own file so that it can be used or reused by other
 code. So, I created a <code>capitalize.py</code> file.</p>
-<pre><code class="language-python">def capitalize(s):
-    &quot;&quot;&quot;Capitalize individual words in a string separated by underscores ('_')&quot;&quot;&quot;
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">capitalize</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Capitalize individual words in a string separated by underscores (&#39;_&#39;)&quot;&quot;&quot;</span>
 
-    return &quot;_&quot;.join([w.capitalize() for w in s.split(&quot;_&quot;)])
-</code></pre>
+    <span class="k">return</span> <span class="s2">&quot;_&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">w</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)])</span>
+</pre></div>
 <p>This is what happened when I ran <code>pytest</code>:</p>
-<pre><code>============================= test session starts ==============================
-platform darwin -- Python 3.8.8, pytest-6.2.4, py-1.10.0, pluggy-0.13.1
-rootdir: /Users/russ/Parse_Nginx_Logs
-collected 1 item
+<div class="highlight"><pre><span></span><span class="o">=============================</span><span class="w"> </span><span class="nb">test</span><span class="w"> </span>session<span class="w"> </span><span class="nv">starts</span><span class="w"> </span><span class="o">==============================</span>
+platform<span class="w"> </span>darwin<span class="w"> </span>--<span class="w"> </span>Python<span class="w"> </span><span class="m">3</span>.8.8,<span class="w"> </span>pytest-6.2.4,<span class="w"> </span>py-1.10.0,<span class="w"> </span>pluggy-0.13.1
+rootdir:<span class="w"> </span>/Users/russ/Parse_Nginx_Logs
+collected<span class="w"> </span><span class="m">1</span><span class="w"> </span>item
 
-test_capitalize.py F                                                     [100%]
+test_capitalize.py<span class="w"> </span>F<span class="w">                                                     </span><span class="o">[</span><span class="m">100</span>%<span class="o">]</span>
 
-=================================== FAILURES ===================================
-_______________________________ test_capitalize ________________________________
+<span class="o">===================================</span><span class="w"> </span><span class="nv">FAILURES</span><span class="w"> </span><span class="o">===================================</span>
+_______________________________<span class="w"> </span>test_capitalize<span class="w"> </span>________________________________
 
-    def test_capitalize():
-        given = 'body_bytes'
-        want = 'Body_Bytes'
+<span class="w">    </span>def<span class="w"> </span>test_capitalize<span class="o">()</span>:
+<span class="w">        </span><span class="nv">given</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;body_bytes&#39;</span>
+<span class="w">        </span><span class="nv">want</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Body_Bytes&#39;</span>
 
-&gt;       got = capitalize(given)
-E       NameError: name 'capitalize' is not defined
+&gt;<span class="w">       </span><span class="nv">got</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>capitalize<span class="o">(</span>given<span class="o">)</span>
+E<span class="w">       </span>NameError:<span class="w"> </span>name<span class="w"> </span><span class="s1">&#39;capitalize&#39;</span><span class="w"> </span>is<span class="w"> </span>not<span class="w"> </span>defined
 
-test_capitalize.py:5: NameError
-=========================== short test summary info ============================
-FAILED test_capitalize.py::test_capitalize - NameError: name 'capitalize' is ...
-============================== 1 failed in 0.05s ===============================
-</code></pre>
+test_capitalize.py:5:<span class="w"> </span><span class="nv">NameError</span>
+<span class="o">===========================</span><span class="w"> </span>short<span class="w"> </span><span class="nb">test</span><span class="w"> </span>summary<span class="w"> </span><span class="nv">info</span><span class="w"> </span><span class="o">============================</span>
+FAILED<span class="w"> </span>test_capitalize.py::test_capitalize<span class="w"> </span>-<span class="w"> </span>NameError:<span class="w"> </span>name<span class="w"> </span><span class="s1">&#39;capitalize&#39;</span><span class="w"> </span>is<span class="w"> </span>...
+<span class="o">==============================</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>failed<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.05s<span class="w"> </span><span class="o">===============================</span>
+</pre></div>
 <p>OK, I forgot to tell the test where the capitalize function is defined. So,
 here's how I did that:</p>
-<pre><code class="language-python">from capitalize import *
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">capitalize</span> <span class="kn">import</span> <span class="o">*</span>
 
-def test_capitalize():
-    given = 'body_bytes'
-    want = 'Body_Bytes'
+<span class="k">def</span> <span class="nf">test_capitalize</span><span class="p">():</span>
+    <span class="n">given</span> <span class="o">=</span> <span class="s1">&#39;body_bytes&#39;</span>
+    <span class="n">want</span> <span class="o">=</span> <span class="s1">&#39;Body_Bytes&#39;</span>
 
-    got = capitalize(given)
-    assert got == want
-</code></pre>
+    <span class="n">got</span> <span class="o">=</span> <span class="n">capitalize</span><span class="p">(</span><span class="n">given</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">got</span> <span class="o">==</span> <span class="n">want</span>
+</pre></div>
 <p>This is what I got when I ran <code>pytest</code>:</p>
-<pre><code>============================= test session starts ==============================
-platform darwin -- Python 3.8.8, pytest-6.2.4, py-1.10.0, pluggy-0.13.1
-rootdir: /Users/russ/Parse_Nginx_Logs
-collected 1 item
+<div class="highlight"><pre><span></span><span class="o">=============================</span><span class="w"> </span><span class="nb">test</span><span class="w"> </span>session<span class="w"> </span><span class="nv">starts</span><span class="w"> </span><span class="o">==============================</span>
+platform<span class="w"> </span>darwin<span class="w"> </span>--<span class="w"> </span>Python<span class="w"> </span><span class="m">3</span>.8.8,<span class="w"> </span>pytest-6.2.4,<span class="w"> </span>py-1.10.0,<span class="w"> </span>pluggy-0.13.1
+rootdir:<span class="w"> </span>/Users/russ/Parse_Nginx_Logs
+collected<span class="w"> </span><span class="m">1</span><span class="w"> </span>item
 
-test_capitalize.py .                                                     [100%]
+test_capitalize.py<span class="w"> </span>.<span class="w">                                                     </span><span class="o">[</span><span class="m">100</span>%<span class="o">]</span>
 
-============================== 1 passed in 0.02s ===============================
-</code></pre>
+<span class="o">==============================</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>passed<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.02s<span class="w"> </span><span class="o">===============================</span>
+</pre></div>
 <h2>Call to action</h2>
 <p>Wasn't that easy? So, try it!</p>
 

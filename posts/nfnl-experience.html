@@ -30,8 +30,8 @@
           
   <h1>Enhance your Neovim with Fennel</h1>
 <p><em>Last update: 07/31/2023</em>
-<br><a href="/">Back to home</a>
-<br><a href="/posts/">Back to Posts</a></p>
+&lt;br&gt;<a href="/">Back to home</a>
+&lt;br&gt;<a href="/posts/">Back to Posts</a></p>
 <p>This is a report about my experience using the
 <a href="https://github.com/Olical/nfnl">nfnl</a> plugin by Oliver Caldwell to
 create a plugin for Neovim. <code>nfnl</code> allows me to use <em>Fennel</em> instead of
@@ -53,9 +53,9 @@ the problem you're trying to solve.</p>
 restart Neovim.</p>
 </li>
 <li><p>Create project directory and switch to it.</p>
-<pre><code class="language-bash">$ mkdir my-plugin
-$ cd my-plugin
-</code></pre>
+<div class="highlight"><pre><span></span>$<span class="w"> </span>mkdir<span class="w"> </span>my-plugin
+$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>my-plugin
+</pre></div>
 </li>
 <li><p>Add these subdirectories:</p>
 <ul>
@@ -63,12 +63,12 @@ $ cd my-plugin
 <li>lua/my-plugin/</li>
 <li>plugin/</li>
 </ul>
-<pre><code class="language-bash">$ mkdir -p lua/my-plugin fnl/my-plugin plugin
-</code></pre>
+<div class="highlight"><pre><span></span>$<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>lua/my-plugin<span class="w"> </span>fnl/my-plugin<span class="w"> </span>plugin
+</pre></div>
 </li>
 <li><p>Add this configuration to <code>.nfnl.fnl</code> at the top of the project directory.</p>
-<pre><code class="language-fennel">{:source-file-patterns [&quot;fnl/**/*.fnl&quot;]}
-</code></pre>
+<div class="highlight"><pre><span></span><span class="p">{</span><span class="ss">:source-file-patterns</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;fnl/**/*.fnl&quot;</span><span class="p">]}</span>
+</pre></div>
 <p>This configuration will keep the <em>.fnl</em> and <em>.lua</em> files in separate
 directories using a parallel directory structure. If you don't mind them
 being in the same directory, then don't use separate directories and just put
@@ -79,40 +79,40 @@ being in the same directory, then don't use separate directories and just put
 <p>For this example, we'll assume all the hard work of figuring out what to implement in code is done.</p>
 <ul>
 <li><p>Create <code>plugin/my-plugin.vim</code> with this inside:</p>
-<pre><code class="language-viml">if has(&quot;nvim&quot;)
-  lua require(&quot;my-plugin.main&quot;).init()
-endif
-</code></pre>
+<div class="highlight"><pre><span></span><span class="k">if</span> has<span class="p">(</span><span class="s2">&quot;nvim&quot;</span><span class="p">)</span>
+  <span class="k">lua</span> require<span class="p">(</span><span class="s2">&quot;my-plugin.main&quot;</span><span class="p">)</span>.init<span class="p">()</span>
+<span class="k">endif</span>
+</pre></div>
 <p>When this plugin loads, it will cause the <code>init</code> function in <em>main.lua</em> to be
 run. A deeper explanation of this is beyond this report. See <code>:he write-plugin</code>
 for more about writing plugins.</p>
 </li>
 <li><p>Create <code>fnl/my-plugin/main.fnl</code> with this inside:</p>
-<pre><code class="language-fennel">(local {: autoload} (require :nfnl.module))
-(local core (autoload :nfnl.core))
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="kd">local </span><span class="p">{</span><span class="k">: </span><span class="nv">autoload</span><span class="p">}</span><span class="w"> </span><span class="p">(</span><span class="nb">require </span><span class="ss">:nfnl.module</span><span class="p">))</span>
+<span class="p">(</span><span class="kd">local </span><span class="nv">core</span><span class="w"> </span><span class="p">(</span><span class="nv">autoload</span><span class="w"> </span><span class="ss">:nfnl.core</span><span class="p">))</span>
 
-(local mod {})
+<span class="p">(</span><span class="kd">local </span><span class="nv">mod</span><span class="w"> </span><span class="p">{})</span>
 
-(local msg &quot;Tears began to fall from my-plugin! -- Frank Z made me do it.&quot;)
+<span class="p">(</span><span class="kd">local </span><span class="nv">msg</span><span class="w"> </span><span class="s">&quot;Tears began to fall from my-plugin! -- Frank Z made me do it.&quot;</span><span class="p">)</span>
 
-(fn mod.init []
-  (print &quot;This is msg:&quot; msg)
-  (print &quot;  Now just a part of it: &gt;&quot; (string.sub msg 5) &quot;&lt;&quot;))
+<span class="p">(</span><span class="kd">fn </span><span class="nv">mod.init</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">  </span><span class="p">(</span><span class="nb">print </span><span class="s">&quot;This is msg:&quot;</span><span class="w"> </span><span class="nv">msg</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nb">print </span><span class="s">&quot;  Now just a part of it: &gt;&quot;</span><span class="w"> </span><span class="p">(</span><span class="nv">string.sub</span><span class="w"> </span><span class="nv">msg</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;&lt;&quot;</span><span class="p">))</span>
 
-mod
-</code></pre>
+<span class="nv">mod</span>
+</pre></div>
 <p>Alternative to using a <em>local mod</em> variable:</p>
-<pre><code class="language-fennel">(local {: autoload} (require :nfnl.module))
-(local core (autoload :nfnl.core))
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="kd">local </span><span class="p">{</span><span class="k">: </span><span class="nv">autoload</span><span class="p">}</span><span class="w"> </span><span class="p">(</span><span class="nb">require </span><span class="ss">:nfnl.module</span><span class="p">))</span>
+<span class="p">(</span><span class="kd">local </span><span class="nv">core</span><span class="w"> </span><span class="p">(</span><span class="nv">autoload</span><span class="w"> </span><span class="ss">:nfnl.core</span><span class="p">))</span>
 
-(local msg &quot;Tears began to fall from my-plugin! -- Frank Z made me do it.&quot;)
+<span class="p">(</span><span class="kd">local </span><span class="nv">msg</span><span class="w"> </span><span class="s">&quot;Tears began to fall from my-plugin! -- Frank Z made me do it.&quot;</span><span class="p">)</span>
 
-(fn init []
-  (print &quot;This is msg:&quot; msg)
-  (print &quot;  Now just a part of it: &gt;&quot; (string.sub msg 5) &quot;&lt;&quot;))
+<span class="p">(</span><span class="kd">fn </span><span class="nv">init</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">  </span><span class="p">(</span><span class="nb">print </span><span class="s">&quot;This is msg:&quot;</span><span class="w"> </span><span class="nv">msg</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nb">print </span><span class="s">&quot;  Now just a part of it: &gt;&quot;</span><span class="w"> </span><span class="p">(</span><span class="nv">string.sub</span><span class="w"> </span><span class="nv">msg</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;&lt;&quot;</span><span class="p">))</span>
 
-{: init} ;; Export only these functions. The rest are &quot;local&quot;.
-</code></pre>
+<span class="p">{</span><span class="k">: </span><span class="nv">init</span><span class="p">}</span><span class="w"> </span><span class="c1">;; Export only these functions. The rest are &quot;local&quot;.</span>
+</pre></div>
 </li>
 </ul>
 <h2>Compile The Fennel Code</h2>
@@ -121,24 +121,23 @@ mod
 <p>The first time that you save the first Fennel file, <code>nfnl</code> will
 prompt you to confirm that it is OK to proceed. You'll see something like this in
 the command output area.</p>
-<pre><code>.../my-plugin/.nfnl.fnl is not trusted.
-[i]gnore, (v)iew, (d)eny, (a)llow: a
-
-</code></pre>
+<div class="highlight"><pre><span></span>.../my-plugin/.nfnl.fnl<span class="w"> </span>is<span class="w"> </span>not<span class="w"> </span>trusted.
+<span class="o">[</span>i<span class="o">]</span>gnore,<span class="w"> </span><span class="o">(</span>v<span class="o">)</span>iew,<span class="w"> </span><span class="o">(</span>d<span class="o">)</span>eny,<span class="w"> </span><span class="o">(</span>a<span class="o">)</span>llow:<span class="w"> </span>a
+</pre></div>
 <p>You will only need to have the <code>nfnl.fnl</code> file in the top level directory of
 your project. The confirmation question will only be asked the first time that
 you save a Fennel file anywhere under your project directory.</p>
 <p>The project directory structure looks like this:</p>
-<pre><code>├── .nfnl.fnl
-├── fnl
-│   └── my-plugin
-│       └── main.fnl
-├── lua
-│   └── my-plugin
-│       └── main.lua
-└── plugin
-    └── my-plugin.vim
-</code></pre>
+<div class="highlight"><pre><span></span>├──<span class="w"> </span>.nfnl.fnl
+├──<span class="w"> </span>fnl
+│<span class="w">   </span>└──<span class="w"> </span>my-plugin
+│<span class="w">       </span>└──<span class="w"> </span>main.fnl
+├──<span class="w"> </span>lua
+│<span class="w">   </span>└──<span class="w"> </span>my-plugin
+│<span class="w">       </span>└──<span class="w"> </span>main.lua
+└──<span class="w"> </span>plugin
+<span class="w">    </span>└──<span class="w"> </span>my-plugin.vim
+</pre></div>
 <h2>Install Your Plugin</h2>
 <p>So now that everything is working, we add the <code>my-plugin</code> plugin to our Neovim
 configuration. This will depend on which plugin manager you use.</p>
@@ -147,8 +146,7 @@ configuration. This will depend on which plugin manager you use.</p>
 status line:</p>
 <pre><code>This is msg: Tears began to fall from my-plugin! -- Frank Z made me do it.
   Now just a part of it: &gt; s began to fall from my-plugin! -- Frank Z made me do it. &lt;
-</code></pre>
-<p>This is confirmation that the plugin is being loaded and called successfully.
+</pre></code><p>This is confirmation that the plugin is being loaded and called successfully.
 <em>Hello, world!</em></p>
 <h2>Retrospective</h2>
 <p>It was much easier to create the plugin using <code>nfnl</code> compared to <code>Aniseed</code>.
