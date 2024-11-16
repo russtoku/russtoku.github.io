@@ -29,19 +29,23 @@
         <section id="main-content">
           
   <h1>Roadmap to updgrade UIPA to Django 4.2 and Python 3.10</h1>
-<p><em>Last update: 10/19/2024</em><br />
+<p><em>Last update: 11/16/2024</em><br />
 <a href="/">Back to home</a><br />
 <a href="/posts/">Back to Posts</a></p>
 <h2>Status</h2>
 <ul>
+<li><strong>11/14/2024:</strong> Incorporated froide into uipa project source instead of being
+an editable dependency.</li>
 <li><strong>10/18/2024:</strong> Upgraded to Django 1.11.29 and Python 3.8 (3.7 is the highest
 version supported for Django 1.11.29).</li>
 <li><strong>04/28/2024:</strong> Started.</li>
 </ul>
 <h3>Next steps</h3>
 <ul>
-<li>Probably should finish up <em>3</em> and <em>4</em> before tackling <em>6</em>.</li>
-<li><em>5</em> can be pushed out for a while.</li>
+<li>Probably should finish up <strong>3</strong> (<em>Upgrade Python to 3.8</em>) through <strong>5</strong> (<em>Remove
+django-overextends dependency because Django 1.9 already provides the same
+capabilities</em>) before tackling <strong>8</strong> (<em>Upgrade Djange to 2.0.13</em>).</li>
+<li><strong>7</strong> (<em>Figure out deployment for production</em>) can be pushed out for a while.</li>
 </ul>
 <h2>What is this about?</h2>
 <p>The <a href="https://www.publicfirstlaw.org/">Public First Law Center</a> (formerly Civil
@@ -64,11 +68,64 @@ critical problem is that few if any will know:</p>
 <li>What isn't working?</li>
 <li>Are there any problems with the parts that no one knows about?</li>
 </ul>
-<h2>Supported versions of Django and Python</h2>
+<h2>Strategy for upgrading Django and Python (Added 11/16/2024)</h2>
+<p>UIPA.org was built with a modified Froide repository to handle a change in web
+page for making FOI requests. Since that time, no upstream changes have been
+incorportated. Thus, the forked Froide repository is frozen in time.</p>
+<p>This means that we don't really need to keep it separate and can Incorporate it
+into the UIPA.org repo as included Django apps instead of an editable
+dependency.</p>
+<p>Another dependency, <code>django-overextends</code>, can be eliminated because it's
+functionality was included in Django 1.9.</p>
+<p>The <a href="https://docs.djangoproject.com/en/5.1/releases/1.9/">Django 1.9 Release
+Notes</a> says:</p>
 <ul>
-<li><a href="https://www.djangoproject.com/download/#supported-versions">Django</a></li>
-<li><a href="https://devguide.python.org/versions/#supported-versions">Python</a></li>
+<li>Django template loaders can now extend templates recursively. (See
+<a href="https://docs.djangoproject.com/en/5.1/releases/1.9/#templates">Templates</a>).</li>
+<li>Django template loaders have been updated to allow recursive template
+extending. This change necessitated a new template loader API. The old
+load_template() and load_template_sources() methods are now deprecated. Details
+about the new API can be found in the template loader documentation. (See
+<a href="https://docs.djangoproject.com/en/5.1/releases/1.9/#template-loader-apis-have-changed">Template loader APIs have
+changed</a>).</li>
 </ul>
+<p>This is further supported by PR
+<a href="https://github.com/django/django/pull/9884">#9884</a>. which adds documentation
+about this.</p>
+<ul>
+<li><a href="https://github.com/django/django/pull/9884#issuecomment-520636912">@unexceptable's comment on August 12,
+2019</a> says:<blockquote>
+<p>This was added to django 1.9, but before then many of us got by using:
+<a href="https://github.com/stephenmcd/django-overextends">https://github.com/stephenmcd/django-overextends</a></p>
+</blockquote>
+</li>
+</ul>
+<p>See the Django 1.11 <a href="https://docs.djangoproject.com/en/1.11/howto/overriding-templates/">Overriding
+templates</a>.</p>
+<h2>Supported versions of Django and Python</h2>
+<h3><a href="https://www.djangoproject.com/download/#supported-versions">Django</a></h3>
+<table>
+<thead>
+<tr>
+  <th style="text-align:left">Version</th>
+  <th style="text-align:left">Latest Release</th>
+  <th style="text-align:left">End of Extended Support</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Django 4.2 LTS</td>
+  <td style="text-align:left">4.2.16 (09/03/2024)</td>
+  <td style="text-align:left">April 2026</td>
+</tr>
+<tr>
+  <td style="text-align:left">Django 5.2 LTS</td>
+  <td style="text-align:left">5.1.3 (11/05/2024)</td>
+  <td style="text-align:left">April 2028</td>
+</tr>
+</tbody>
+</table>
+<h3><a href="https://devguide.python.org/versions/#supported-versions">Python</a></h3>
 <table>
 <thead>
 <tr>
@@ -79,11 +136,6 @@ critical problem is that few if any will know:</p>
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left">Django 4.2 LTS</td>
-  <td style="text-align:left">4.2.16 (09/03/2024)</td>
-  <td style="text-align:left">April 2026</td>
-</tr>
-<tr>
   <td style="text-align:left">Python 3.10</td>
   <td style="text-align:left">3.10.15 (09/07/2024)</td>
   <td style="text-align:left">October 2026</td>
@@ -93,13 +145,21 @@ critical problem is that few if any will know:</p>
   <td style="text-align:left">3.12.7 (10/01/2024)</td>
   <td style="text-align:left">October 2028</td>
 </tr>
+<tr>
+  <td style="text-align:left">Python 3.13</td>
+  <td style="text-align:left">3.13.0 (10/07/2024)</td>
+  <td style="text-align:left">October 2029</td>
+</tr>
 </tbody>
 </table>
 <h2>Repositories</h2>
-<p>UIPA.org was built from an older version of Froide and Froide Theme. It forked
-the Froide Theme for the UIPA repositories. It also forked Froide because
-FoiRequest module was modified to accommodate mods for asking a requester to
-state why they should have the fees waived.</p>
+<p>UIPA.org was built from an older version of Froide and Froide Theme.</p>
+<p>The Froide repo was forked because the <code>FoiRequest</code> module was modified to
+accommodate asking a requester to state why they should have the fees
+waived. This was a requirement from the <a href="https://oip.hawaii.gov/forms/">UIPA request
+form</a> provided by the <a href="https://oip.hawaii.gov/">Office of Information
+Practices</a>.</p>
+<p>The Froide Theme repo was forked and renamed to <code>uipa</code>.</p>
 <table>
 <thead>
 <tr>
@@ -112,15 +172,40 @@ state why they should have the fees waived.</p>
 <tbody>
 <tr>
   <td style="text-align:left">UIPA</td>
-  <td style="text-align:left">https://github.com/CodeWithAloha/</td>
+  <td style="text-align:left"><a href="https://github.com/CodeWithAloha/uipa">https://github.com/CodeWithAloha/uipa</a></td>
   <td style="text-align:left">master</td>
-  <td style="text-align:left">https://github.com/okfde/froide-theme</td>
+  <td style="text-align:left"><a href="https://github.com/okfde/froide-theme">https://github.com/okfde/froide-theme</a></td>
 </tr>
 <tr>
   <td style="text-align:left">Froide</td>
-  <td style="text-align:left">https://github.com/CodeWithAloha/froide/</td>
+  <td style="text-align:left"><a href="https://github.com/CodeWithAloha/froide">https://github.com/CodeWithAloha/froide</a></td>
   <td style="text-align:left">master</td>
-  <td style="text-align:left">https://github.com/okfde/froide</td>
+  <td style="text-align:left"><a href="https://github.com/okfde/froide">https://github.com/okfde/froide</a></td>
+</tr>
+</tbody>
+</table>
+<h3>Repos for this upgrade</h3>
+<table>
+<thead>
+<tr>
+  <th style="text-align:left">Repositories</th>
+  <th style="text-align:left">URL</th>
+  <th style="text-align:left">Branch</th>
+  <th style="text-align:left">Forked from</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">UIPA</td>
+  <td style="text-align:left"><a href="https://github.com/russtoku/uipa">https://github.com/russtoku/uipa</a></td>
+  <td style="text-align:left">dj_1_11</td>
+  <td style="text-align:left"><a href="https://github.com/CodeWithAloha/uipa">https://github.com/CodeWithAloha/uipa</a></td>
+</tr>
+<tr>
+  <td style="text-align:left">Froide</td>
+  <td style="text-align:left"><a href="https://github.com/russtoku/froide">https://github.com/russtoku/froide</a></td>
+  <td style="text-align:left">dj_1_11</td>
+  <td style="text-align:left"><a href="https://github.com/CodeWithAloha/froide">https://github.com/CodeWithAloha/froide</a></td>
 </tr>
 </tbody>
 </table>
@@ -176,15 +261,41 @@ only up to elasticsearch 2.x).</li>
 <li>Does work with Django 1.11.17.</li>
 <li>No longer supported as of 10/07/2024.</li>
 <li>TODO:<ul>
-<li>Install GDAL, postgis, and libgeoip for django-floppyforms or not.<ul>
+<li><strong>NO:</strong> Install GDAL, postgis, and libgeoip for django-floppyforms or not.<ul>
+<li>Can leave things the way they are without GDAL, postgis, and
+libgeoip because they aren't really being used; especially
+floppyforms GEO widgets.</li>
 <li>If don't need the GIS stuff, see:
 https://github.com/jazzband/django-floppyforms/issues/189#issuecomment-379546682</li>
 </ul>
 </li>
 <li>Create test plan and tests because there are major changes with Django
-2.0.</li>
+2.0.<ul>
+<li>Use <code>pytest</code> instead of Django's &quot;manage.py test&quot; which uses
+<code>unittest</code>.</li>
 </ul>
 </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Incorporate froide as apps instead of a dependency. (Added 11/1/2024)</p>
+<ul>
+<li><strong>Mostly Completed:</strong> 11/15/2024<ul>
+<li>TODO: Merge from dj_1_11_spike to dj_1_11.</li>
+</ul>
+</li>
+<li>This makes it easier to make changes to froide by eliminating the need to
+maintain two repos for the UIPA.org website.</li>
+</ul>
+</li>
+<li><p>Remove django-overextends dependency because Django 1.9 already provides
+the same capabilities. (Added 11/15/2024)</p>
+<ul>
+<li>Remove <code>overextends</code> from <code>INSTALLED_APPS</code> in <code>froide/settings.py</code>.</li>
+<li>Remove <code>django-overextends</code> from <code>requirements.txt</code>.</li>
+<li>Change <code>overextends</code> to <code>extends</code> in templates under <code>uipa_org</code>
+directory.</li>
 </ul>
 </li>
 <li><p><del>Set up Postfix in a Docker container.</del> Create local test mail server.</p>
@@ -221,7 +332,10 @@ available as django.urls.re_path()</li>
 </li>
 <li><p>Backwards incompatible changes in Django 1.11</p>
 <ul>
-<li>Removed support for bytestrings in some places</li>
+<li>Removed support for bytestrings in some places<ul>
+<li>call <code>decode()</code> on the bytestring before passing it to <code>reverse()</code></li>
+</ul>
+</li>
 <li>Form fields no longer accept optional arguments as positional
 arguments</li>
 <li>Indexes no longer accept positional arguments</li>
