@@ -450,6 +450,7 @@ removed. Use django.utils.http.parse_header_parameters() instead</li>
 to return the SetPasswordForm for the views. The fix is to remove
 SetPasswordForm from froide/account/models.py and add it to
 froide/account/views.py.</p>
+<h3>The problem</h3>
 <p>When trying to upgrade Django from 1.10.2 (last working UIPA) to 1.11, running
 &quot;python manage.py check&quot; fails with an error about the &quot;AUTH_USER_MODEL refers
 to model 'account.User' that has not been installed&quot;. This is prevent further
