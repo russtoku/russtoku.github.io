@@ -29,11 +29,35 @@
         <section id="main-content">
           
   <h1>Roadmap to updgrade UIPA to Django 4.2 and Python 3.10</h1>
-<p><em>Last update: 11/17/2024</em><br />
+<p><em>Last update: 12/23/2024</em><br />
 <a href="/">Back to home</a><br />
 <a href="/posts/">Back to Posts</a></p>
 <h2>Status</h2>
+<table>
+<thead>
+<tr>
+  <th>Item</th>
+  <th>Production Version</th>
+  <th>Working Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Django</td>
+  <td>1.9</td>
+  <td>1.11</td>
+</tr>
+<tr>
+  <td>Python</td>
+  <td>2.7</td>
+  <td>3.8</td>
+</tr>
+</tbody>
+</table>
+<h3>Change Log</h3>
 <ul>
+<li><strong>12/23/2024:</strong> Fixed some broken things. Removed django-overextends
+dependency because the functionality is included in Django 1.9.</li>
 <li><strong>11/14/2024:</strong> Incorporated froide into uipa project source instead of being
 an editable dependency.</li>
 <li><strong>10/18/2024:</strong> Upgraded to Django 1.11.29 and Python 3.8 (3.7 is the highest
@@ -41,175 +65,14 @@ version supported for Django 1.11.29).</li>
 <li><strong>04/28/2024:</strong> Started.</li>
 </ul>
 <h3>Next steps</h3>
+<p>See the sections below the ROADMAP for more details.</p>
 <ul>
 <li>Probably should finish up <strong>3</strong> (<em>Upgrade Python to 3.8</em>) through <strong>5</strong> (<em>Remove
 django-overextends dependency because Django 1.9 already provides the same
-capabilities</em>) before tackling <strong>8</strong> (<em>Upgrade Djange to 2.0.13</em>).</li>
+capabilities</em>) before tackling <strong>8</strong> (<em>Upgrade Django to 2.0.13</em>).</li>
 <li><strong>7</strong> (<em>Figure out deployment for production</em>) can be pushed out for a while.</li>
 </ul>
-<h2>What is this about?</h2>
-<p>The <a href="https://www.publicfirstlaw.org/">Public First Law Center</a> (formerly Civil
-Beat Law Center) wants to get UIPA.org on modern, supported versions of Python
-and Django.</p>
-<p>The site went live on September 2018 using Python 2.7 and Django 1.9. Both are
-have been unsupported for a long time.</p>
-<p>Currently, Code With Aloha is pursuing an
-<a href="https://github.com/orgs/CodeWithAloha/projects/14">upgrade</a> of
-<a href="https://github.com/CodeWithAloha/uipa/wiki">UIPA.org</a> using the latest version
-of Froide using Python 3.10 and Django 4.2.</p>
-<p>This roadmap is an alternate approach to upgrading UIPA.org to Python 3.10 and
-Django 4.2. The newer version of Froide has more feaures that the old
-version. The additional features are not likely to be used by UIPA.org
-users. Additionally, it is not clear what features users currently use. So,
-there is bloat in the software that would be put into production. However, the
-critical problem is that few if any will know:</p>
-<ul>
-<li>What's working?</li>
-<li>What isn't working?</li>
-<li>Are there any problems with the parts that no one knows about?</li>
-</ul>
-<h2>Strategy for upgrading Django and Python (Added 11/16/2024)</h2>
-<p>UIPA.org was built with a modified Froide repository to handle a change in web
-page for making FOI requests. Since that time, no upstream changes have been
-incorportated. Thus, the forked Froide repository is frozen in time.</p>
-<p>This means that we don't really need to keep it separate and can Incorporate it
-into the UIPA.org repo as included Django apps instead of an editable
-dependency.</p>
-<p>Another dependency, <code>django-overextends</code>, can be eliminated because it's
-functionality was included in Django 1.9.</p>
-<p>The <a href="https://docs.djangoproject.com/en/5.1/releases/1.9/">Django 1.9 Release
-Notes</a> says:</p>
-<ul>
-<li>Django template loaders can now extend templates recursively. (See
-<a href="https://docs.djangoproject.com/en/5.1/releases/1.9/#templates">Templates</a>).</li>
-<li>Django template loaders have been updated to allow recursive template
-extending. This change necessitated a new template loader API. The old
-load_template() and load_template_sources() methods are now deprecated. Details
-about the new API can be found in the template loader documentation. (See
-<a href="https://docs.djangoproject.com/en/5.1/releases/1.9/#template-loader-apis-have-changed">Template loader APIs have
-changed</a>).</li>
-</ul>
-<p>This is further supported by PR
-<a href="https://github.com/django/django/pull/9884">#9884</a>. which adds documentation
-about this.</p>
-<ul>
-<li><a href="https://github.com/django/django/pull/9884#issuecomment-520636912">@unexceptable's comment on August 12,
-2019</a> says:<blockquote>
-<p>This was added to django 1.9, but before then many of us got by using:
-<a href="https://github.com/stephenmcd/django-overextends">https://github.com/stephenmcd/django-overextends</a></p>
-</blockquote>
-</li>
-</ul>
-<p>See the Django 1.11 <a href="https://docs.djangoproject.com/en/1.11/howto/overriding-templates/">Overriding
-templates</a>.</p>
-<h2>Supported versions of Django and Python</h2>
-<h3><a href="https://www.djangoproject.com/download/#supported-versions">Django</a></h3>
-<table>
-<thead>
-<tr>
-  <th style="text-align:left">Version</th>
-  <th style="text-align:left">Latest Release</th>
-  <th style="text-align:left">End of Extended Support</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left">Django 4.2 LTS</td>
-  <td style="text-align:left">4.2.16 (09/03/2024)</td>
-  <td style="text-align:left">April 2026</td>
-</tr>
-<tr>
-  <td style="text-align:left">Django 5.2 LTS</td>
-  <td style="text-align:left">5.1.3 (11/05/2024)</td>
-  <td style="text-align:left">April 2028</td>
-</tr>
-</tbody>
-</table>
-<h3><a href="https://devguide.python.org/versions/#supported-versions">Python</a></h3>
-<table>
-<thead>
-<tr>
-  <th style="text-align:left">Version</th>
-  <th style="text-align:left">Latest Release</th>
-  <th style="text-align:left">End of Support</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left">Python 3.10</td>
-  <td style="text-align:left">3.10.15 (09/07/2024)</td>
-  <td style="text-align:left">October 2026</td>
-</tr>
-<tr>
-  <td style="text-align:left">Python 3.12</td>
-  <td style="text-align:left">3.12.7 (10/01/2024)</td>
-  <td style="text-align:left">October 2028</td>
-</tr>
-<tr>
-  <td style="text-align:left">Python 3.13</td>
-  <td style="text-align:left">3.13.0 (10/07/2024)</td>
-  <td style="text-align:left">October 2029</td>
-</tr>
-</tbody>
-</table>
-<h2>Repositories</h2>
-<p>UIPA.org was built from an older version of Froide and Froide Theme.</p>
-<p>The Froide repo was forked because the <code>FoiRequest</code> module was modified to
-accommodate asking a requester to state why they should have the fees
-waived. This was a requirement from the <a href="https://oip.hawaii.gov/forms/">UIPA request
-form</a> provided by the <a href="https://oip.hawaii.gov/">Office of Information
-Practices</a>.</p>
-<p>The Froide Theme repo was forked and renamed to <code>uipa</code>.</p>
-<table>
-<thead>
-<tr>
-  <th style="text-align:left">Repositories</th>
-  <th style="text-align:left">URL</th>
-  <th style="text-align:left">Branch</th>
-  <th style="text-align:left">Forked from</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left">UIPA</td>
-  <td style="text-align:left"><a href="https://github.com/CodeWithAloha/uipa">https://github.com/CodeWithAloha/uipa</a></td>
-  <td style="text-align:left">master</td>
-  <td style="text-align:left"><a href="https://github.com/okfde/froide-theme">https://github.com/okfde/froide-theme</a></td>
-</tr>
-<tr>
-  <td style="text-align:left">Froide</td>
-  <td style="text-align:left"><a href="https://github.com/CodeWithAloha/froide">https://github.com/CodeWithAloha/froide</a></td>
-  <td style="text-align:left">master</td>
-  <td style="text-align:left"><a href="https://github.com/okfde/froide">https://github.com/okfde/froide</a></td>
-</tr>
-</tbody>
-</table>
-<h3>Repos for this upgrade</h3>
-<table>
-<thead>
-<tr>
-  <th style="text-align:left">Repositories</th>
-  <th style="text-align:left">URL</th>
-  <th style="text-align:left">Branch</th>
-  <th style="text-align:left">Forked from</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left">UIPA</td>
-  <td style="text-align:left"><a href="https://github.com/russtoku/uipa">https://github.com/russtoku/uipa</a></td>
-  <td style="text-align:left">dj_1_11</td>
-  <td style="text-align:left"><a href="https://github.com/CodeWithAloha/uipa">https://github.com/CodeWithAloha/uipa</a></td>
-</tr>
-<tr>
-  <td style="text-align:left">Froide</td>
-  <td style="text-align:left"><a href="https://github.com/russtoku/froide">https://github.com/russtoku/froide</a></td>
-  <td style="text-align:left">dj_1_11</td>
-  <td style="text-align:left"><a href="https://github.com/CodeWithAloha/froide">https://github.com/CodeWithAloha/froide</a></td>
-</tr>
-</tbody>
-</table>
-<h2>Roadmap</h2>
+<h2>ROADMAP</h2>
 <ol>
 <li><p>Upgrade Django to 1.11.29 (LTS; last version to support Python 2.7)
 with Python 2.7.15.</p>
@@ -281,10 +144,7 @@ https://github.com/jazzband/django-floppyforms/issues/189#issuecomment-379546682
 </li>
 <li><p>Incorporate froide as apps instead of a dependency. (Added 11/1/2024)</p>
 <ul>
-<li><strong>Mostly Completed:</strong> 11/15/2024<ul>
-<li>TODO: Merge from dj_1_11_spike to dj_1_11.</li>
-</ul>
-</li>
+<li><strong>Completed:</strong> 11/17/2024</li>
 <li>This makes it easier to make changes to froide by eliminating the need to
 maintain two repos for the UIPA.org website.</li>
 </ul>
@@ -292,6 +152,7 @@ maintain two repos for the UIPA.org website.</li>
 <li><p>Remove django-overextends dependency because Django 1.9 already provides
 the same capabilities. (Added 11/15/2024)</p>
 <ul>
+<li><strong>Completed:</strong> 12/22/2024</li>
 <li>Remove <code>overextends</code> from <code>INSTALLED_APPS</code> in <code>froide/settings.py</code>.</li>
 <li>Remove <code>django-overextends</code> from <code>requirements.txt</code>.</li>
 <li>Change <code>overextends</code> to <code>extends</code> in templates under <code>uipa_org</code>
@@ -300,6 +161,7 @@ directory.</li>
 </li>
 <li><p><del>Set up Postfix in a Docker container.</del> Create local test mail server.</p>
 <ul>
+<li><strong>Completed:</strong> 12/22/2024</li>
 <li><strong>Created test mail server program:</strong> 10/18/2024; see
 <a href="https://github.com/russtoku/test-mail-server">https://github.com/russtoku/test-mail-server</a></li>
 <li>TODO:<ul>
@@ -444,8 +306,239 @@ removed. Use django.utils.http.parse_header_parameters() instead</li>
 <li><p>Upgrade Python to 3.12 (highest supported by Django 4.2.8).</p>
 </li>
 </ol>
+<h2>What is this about?</h2>
+<p>The <a href="https://www.publicfirstlaw.org/">Public First Law Center</a> (formerly Civil
+Beat Law Center) wants to get UIPA.org on modern, supported versions of Python
+and Django.</p>
+<p>The site went live on September 2018 using Python 2.7 and Django 1.9. Both are
+have been unsupported for a long time. See the Repositories section below for
+the versions of Froide and Froide Theme.</p>
+<p>Currently, Code With Aloha is pursuing an
+<a href="https://github.com/orgs/CodeWithAloha/projects/14">upgrade</a> of
+<a href="https://github.com/CodeWithAloha/uipa/wiki">UIPA.org</a> using the latest version
+of Froide using Python 3.10 and Django 4.2.</p>
+<p>This roadmap is an alternate approach to upgrading UIPA.org to Python 3.10 and
+Django 4.2. The newer version of Froide has more feaures that the old
+version. The additional features are not likely to be used by UIPA.org
+users. Additionally, it is not clear what features users currently use. So,
+there is bloat in the software that would be put into production. However, the
+critical problem is that few if any will know:</p>
+<ul>
+<li>What's working?</li>
+<li>What isn't working?</li>
+<li>Are there any problems with the parts that no one knows about?</li>
+</ul>
+<h2>Strategy for upgrading Django and Python</h2>
+<p>UIPA.org was built with a modified Froide repository to handle a change in web
+page for making FOI requests. Since that time, no upstream changes have been
+incorportated. Thus, the forked Froide repository is frozen in time.</p>
+<p>This means that we don't really need to keep it separate and can incorporate it
+into the UIPA.org repo as included Django apps instead of an editable
+dependency.</p>
+<p>Another dependency, <code>django-overextends</code>, can be eliminated because it's
+functionality was included in Django 1.9.</p>
+<p>The <a href="https://docs.djangoproject.com/en/5.1/releases/1.9/">Django 1.9 Release
+Notes</a> says:</p>
+<ul>
+<li>Django template loaders can now extend templates recursively. (See
+<a href="https://docs.djangoproject.com/en/5.1/releases/1.9/#templates">Templates</a>).</li>
+<li>Django template loaders have been updated to allow recursive template
+extending. This change necessitated a new template loader API. The old
+load_template() and load_template_sources() methods are now deprecated. Details
+about the new API can be found in the template loader documentation. (See
+<a href="https://docs.djangoproject.com/en/5.1/releases/1.9/#template-loader-apis-have-changed">Template loader APIs have
+changed</a>).</li>
+</ul>
+<p>This is further supported by PR
+<a href="https://github.com/django/django/pull/9884">#9884</a> which adds documentation
+about this.</p>
+<ul>
+<li><a href="https://github.com/django/django/pull/9884#issuecomment-520636912">@unexceptable's comment on August 12,
+2019</a> says:<blockquote>
+<p>This was added to django 1.9, but before then many of us got by using:
+<a href="https://github.com/stephenmcd/django-overextends">https://github.com/stephenmcd/django-overextends</a></p>
+</blockquote>
+</li>
+</ul>
+<p>See the Django 1.11 <a href="https://docs.djangoproject.com/en/1.11/howto/overriding-templates/">Overriding
+templates</a>.</p>
+<h2>Supported versions of Django and Python</h2>
+<h3><a href="https://www.djangoproject.com/download/#supported-versions">Django</a></h3>
+<table>
+<thead>
+<tr>
+  <th style="text-align:left">Version</th>
+  <th style="text-align:left">Latest Release</th>
+  <th style="text-align:left">End of Extended Support</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Django 4.2 LTS</td>
+  <td style="text-align:left">4.2.16 (09/03/2024)</td>
+  <td style="text-align:left">April 2026</td>
+</tr>
+<tr>
+  <td style="text-align:left">Django 5.2 LTS</td>
+  <td style="text-align:left">5.1.3 (11/05/2024)</td>
+  <td style="text-align:left">April 2028</td>
+</tr>
+</tbody>
+</table>
+<h3><a href="https://devguide.python.org/versions/#supported-versions">Python</a></h3>
+<table>
+<thead>
+<tr>
+  <th style="text-align:left">Version</th>
+  <th style="text-align:left">Latest Release</th>
+  <th style="text-align:left">End of Support</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">Python 3.10</td>
+  <td style="text-align:left">3.10.15 (09/07/2024)</td>
+  <td style="text-align:left">October 2026</td>
+</tr>
+<tr>
+  <td style="text-align:left">Python 3.12</td>
+  <td style="text-align:left">3.12.7 (10/01/2024)</td>
+  <td style="text-align:left">October 2028</td>
+</tr>
+<tr>
+  <td style="text-align:left">Python 3.13</td>
+  <td style="text-align:left">3.13.0 (10/07/2024)</td>
+  <td style="text-align:left">October 2029</td>
+</tr>
+</tbody>
+</table>
+<h2>Repositories</h2>
+<table>
+<thead>
+<tr>
+  <th style="text-align:left">Repositories</th>
+  <th style="text-align:left">URL</th>
+  <th style="text-align:left">Branch</th>
+  <th style="text-align:left">Forked from</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">UIPA</td>
+  <td style="text-align:left"><a href="https://github.com/CodeWithAloha/uipa">https://github.com/CodeWithAloha/uipa</a></td>
+  <td style="text-align:left">master</td>
+  <td style="text-align:left"><a href="https://github.com/okfde/froide-theme">https://github.com/okfde/froide-theme</a></td>
+</tr>
+<tr>
+  <td style="text-align:left">Froide</td>
+  <td style="text-align:left"><a href="https://github.com/CodeWithAloha/froide">https://github.com/CodeWithAloha/froide</a></td>
+  <td style="text-align:left">main</td>
+  <td style="text-align:left"><a href="https://github.com/okfde/froide">https://github.com/okfde/froide</a></td>
+</tr>
+</tbody>
+</table>
+<p>UIPA.org was built from a fork of the Froide Theme repo that was renamed to
+<code>uipa</code>. It's not the only repo. Careful reading of the <code>README</code> and the
+<code>requirements.txt</code> files reveals that Froide is arranged as an editable
+dependency (<code>pip install -r requirements.txt -e . --src=./src</code>) for UIPA.org.</p>
+<p>One of the reasons the Froide repo was forked was because the <code>FoiRequest</code>
+module was modified to accommodate asking a requester to state why they should
+have the fees waived. This was a requirement from the <a href="https://oip.hawaii.gov/forms/">UIPA request
+form</a> provided by the <a href="https://oip.hawaii.gov/">Office of Information
+Practices</a>.</p>
+<p>The commit history shows that there were other mods made to Froide.</p>
+<div class="highlight"><pre><span></span>froide<span class="w"> </span><span class="o">(</span>master<span class="o">)</span>$<span class="w"> </span>git<span class="w"> </span>remote<span class="w"> </span>-v
+origin<span class="w">	</span>https://github.com/CodeWithAloha/froide<span class="w"> </span><span class="o">(</span>fetch<span class="o">)</span>
+origin<span class="w">	</span>https://github.com/CodeWithAloha/froide<span class="w"> </span><span class="o">(</span>push<span class="o">)</span>
+
+froide<span class="w"> </span><span class="o">(</span>master<span class="o">)</span>$<span class="w"> </span>git<span class="w"> </span>branch
+*<span class="w"> </span>master
+
+froide<span class="w"> </span><span class="o">(</span>master<span class="o">)</span>$<span class="w"> </span>git<span class="w"> </span>log<span class="w"> </span>--pretty<span class="o">=</span><span class="s1">&#39;format:%h%d (%cn %as, %s)&#39;</span><span class="w"> </span>-n<span class="w"> </span><span class="m">10</span>
+03c6a1f1<span class="w"> </span><span class="o">(</span>HEAD<span class="w"> </span>-&gt;<span class="w"> </span>master,<span class="w"> </span>origin/master<span class="o">)</span><span class="w"> </span><span class="o">(</span>Ryan<span class="w"> </span><span class="m">2018</span>-10-11,<span class="w"> </span>Added<span class="w"> </span>cc<span class="w"> </span>logic<span class="w"> </span>to<span class="w"> </span>foirequest<span class="w"> </span>model<span class="o">)</span>
+4df7f378<span class="w"> </span><span class="o">(</span>Ryan<span class="w"> </span><span class="m">2017</span>-11-18,<span class="w"> </span>Extended<span class="w"> </span>length<span class="w"> </span>of<span class="w"> </span>cached<span class="w"> </span>front<span class="w"> </span>page<span class="o">)</span>
+c47a3330<span class="w"> </span><span class="o">(</span>Ryan<span class="w"> </span><span class="m">2017</span>-07-07,<span class="w"> </span>Removed<span class="w"> </span>form1_records_request.pdf<span class="w"> </span>checks.<span class="w"> </span>Instead,<span class="w"> </span>changed<span class="w"> </span>attachment<span class="w"> </span>to<span class="w"> </span><span class="nv">can_approve</span><span class="o">=</span>False<span class="o">)</span>
+7ef92270<span class="w"> </span><span class="o">(</span>Ryan<span class="w"> </span><span class="m">2017</span>-06-24,<span class="w"> </span>Parse<span class="w"> </span>deferred<span class="w"> </span>using<span class="w"> </span>postmark<span class="o">)</span>
+51dd9a03<span class="w"> </span><span class="o">(</span>Ryan<span class="w"> </span><span class="m">2017</span>-06-24,<span class="w"> </span>Unsure<span class="w"> </span>how<span class="w"> </span>this<span class="w"> </span>reprocess<span class="w"> </span>would<span class="w"> </span>ever<span class="w"> </span>have<span class="w"> </span>worked,<span class="w"> </span>tbh<span class="o">)</span>
+31f9446e<span class="w"> </span><span class="o">(</span>Ryan<span class="w"> </span><span class="m">2017</span>-06-24,<span class="w"> </span>Added<span class="w"> </span>more<span class="w"> </span>logging<span class="w"> </span><span class="k">for</span><span class="w"> </span>Deferred<span class="o">)</span>
+22a8e374<span class="w"> </span><span class="o">(</span>Ryan<span class="w"> </span><span class="m">2017</span>-06-24,<span class="w"> </span>Added<span class="w"> </span>_deliver_mail<span class="w"> </span>logging<span class="w"> </span><span class="k">for</span><span class="w"> </span>Deferred<span class="w"> </span>Messages<span class="o">)</span>
+5f78b01b<span class="w"> </span><span class="o">(</span>Ryan<span class="w"> </span><span class="m">2017</span>-06-24,<span class="w"> </span>Added<span class="w"> </span>logging<span class="w"> </span><span class="k">for</span><span class="w"> </span>deferred<span class="w"> </span>admin<span class="o">)</span>
+3ba1c960<span class="w"> </span><span class="o">(</span>Ryan<span class="w"> </span><span class="m">2017</span>-06-24,<span class="w"> </span>Added<span class="w"> </span>logging<span class="w"> </span>to<span class="w"> </span>figure<span class="w"> </span>out<span class="w"> </span>why<span class="w"> </span>deferreds<span class="w"> </span>are<span class="w"> </span>silently<span class="w"> </span>being<span class="w"> </span>eaten<span class="o">)</span>
+e2ff2b25<span class="w"> </span><span class="o">(</span>Ryan<span class="w"> </span><span class="m">2017</span>-06-24,<span class="w"> </span>Updated<span class="w"> </span>subject<span class="w"> </span>to<span class="w"> </span>remove<span class="w"> </span>word<span class="w"> </span><span class="s1">&#39;one&#39;</span><span class="o">)</span>
+</pre></div>
+<h3>What version of Froide was the UIPA.org forked from?</h3>
+<p>It looks like v3.0 (03/14/2013) of okfde/froide was used as the starting point.</p>
+<div class="highlight"><pre><span></span>froide<span class="w"> </span><span class="o">(</span>master<span class="o">)</span>$<span class="w"> </span>git<span class="w"> </span>remote<span class="w"> </span>-v
+origin<span class="w">	</span>https://github.com/CodeWithAloha/froide<span class="w"> </span><span class="o">(</span>fetch<span class="o">)</span>
+origin<span class="w">	</span>https://github.com/CodeWithAloha/froide<span class="w"> </span><span class="o">(</span>push<span class="o">)</span>
+
+froide<span class="w"> </span><span class="o">(</span>master<span class="o">)</span>$<span class="w"> </span>git<span class="w"> </span>branch
+*<span class="w"> </span>master
+
+froide<span class="w"> </span><span class="o">(</span>master<span class="o">)</span>$<span class="w"> </span>git<span class="w"> </span>log<span class="w"> </span>--pretty<span class="o">=</span><span class="s1">&#39;format:%h%d (%cn %as, %s)&#39;</span><span class="w"> </span>--tags<span class="w"> </span>--no-walk
+066cc4a2<span class="w"> </span><span class="o">(</span>tag:<span class="w"> </span>v3.0<span class="o">)</span><span class="w"> </span><span class="o">(</span>Stefan<span class="w"> </span>Wehrmeyer<span class="w"> </span><span class="m">2013</span>-03-14,<span class="w"> </span>Bump<span class="w"> </span>to<span class="w"> </span>version<span class="w"> </span><span class="m">3</span>.0<span class="o">)</span>
+00ec1650<span class="w"> </span><span class="o">(</span>tag:<span class="w"> </span>v2.0<span class="o">)</span><span class="w"> </span><span class="o">(</span>Stefan<span class="w"> </span>Wehrmeyer<span class="w"> </span><span class="m">2012</span>-10-05,<span class="w"> </span>Make<span class="w"> </span>public<span class="w"> </span>body<span class="w"> </span>number<span class="w"> </span>static<span class="w"> </span>on<span class="w"> </span>Hamburg<span class="w"> </span><span class="k">for</span><span class="w"> </span>now<span class="o">)</span>
+
+
+froide<span class="w"> </span><span class="o">(</span>master<span class="o">)</span>$<span class="w"> </span>git<span class="w"> </span>log<span class="w"> </span>--pretty<span class="o">=</span><span class="s1">&#39;format:%h%d (%cn %as, %s)&#39;</span><span class="w"> </span>--tags<span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="m">5</span>
+066cc4a2<span class="w"> </span><span class="o">(</span>tag:<span class="w"> </span>v3.0<span class="o">)</span><span class="w"> </span><span class="o">(</span>Stefan<span class="w"> </span>Wehrmeyer<span class="w"> </span><span class="m">2013</span>-03-14,<span class="w"> </span>Bump<span class="w"> </span>to<span class="w"> </span>version<span class="w"> </span><span class="m">3</span>.0<span class="o">)</span>
+7343ec7b<span class="w"> </span><span class="o">(</span>Stefan<span class="w"> </span>Wehrmeyer<span class="w"> </span><span class="m">2013</span>-03-14,<span class="w"> </span>Update<span class="w"> </span>translation<span class="w"> </span>files<span class="o">)</span>
+6ab9b6e0<span class="w"> </span><span class="o">(</span>Stefan<span class="w"> </span>Wehrmeyer<span class="w"> </span><span class="m">2013</span>-03-14,<span class="w"> </span>Move<span class="w"> </span><span class="nb">set</span><span class="w"> </span>status<span class="w"> </span>template<span class="w"> </span>around<span class="o">)</span>
+0d04cdd6<span class="w"> </span><span class="o">(</span>Stefan<span class="w"> </span>Wehrmeyer<span class="w"> </span><span class="m">2013</span>-03-14,<span class="w"> </span>Fix<span class="w"> </span>dependency<span class="w"> </span>of<span class="w"> </span>moved<span class="w"> </span>repository<span class="o">)</span>
+f781e3dd<span class="w"> </span><span class="o">(</span>Stefan<span class="w"> </span>Wehrmeyer<span class="w"> </span><span class="m">2013</span>-03-13,<span class="w"> </span>Add<span class="w"> </span><span class="nb">test</span><span class="w"> </span>data<span class="w"> </span><span class="k">for</span><span class="w"> </span>last<span class="w"> </span>commit<span class="o">)</span>
+
+
+<span class="w">  </span>*<span class="w"> </span>Some<span class="w"> </span>commits<span class="w"> </span>after<span class="w"> </span>v3.0:
+
+1d138ef9<span class="w"> </span><span class="o">(</span>Stefan<span class="w"> </span>Wehrmeyer<span class="w"> </span><span class="m">2013</span>-04-18,<span class="w"> </span>Merge<span class="w"> </span>pull<span class="w"> </span>request<span class="w"> </span><span class="c1">#51 from felixebert/master)</span>
+3c93f486<span class="w"> </span><span class="o">(</span>Felix<span class="w"> </span>Ebert<span class="w"> </span><span class="m">2013</span>-04-17,<span class="w"> </span>Issue<span class="w"> </span><span class="c1">#50: update of ScrollToFixed plugin (for minWidth property))</span>
+23621de9<span class="w"> </span><span class="o">(</span>Felix<span class="w"> </span>Ebert<span class="w"> </span><span class="m">2013</span>-04-17,<span class="w"> </span>fix<span class="w"> </span><span class="k">for</span><span class="w"> </span>Issue<span class="w"> </span><span class="c1">#50: Mobile: Section &quot;Ähnliche Anfrage&quot; overlays request content area)</span>
+36ff6f9e<span class="w"> </span><span class="o">(</span>Stefan<span class="w"> </span>Wehrmeyer<span class="w"> </span><span class="m">2013</span>-04-10,<span class="w"> </span>Add<span class="w"> </span>features<span class="w"> </span>to<span class="w"> </span>DeferredMessage<span class="w"> </span>admin<span class="o">)</span>
+ca708d1f<span class="w"> </span><span class="o">(</span>Stefan<span class="w"> </span>Wehrmeyer<span class="w"> </span><span class="m">2013</span>-04-06,<span class="w"> </span>Fix<span class="w"> </span>check<span class="w"> </span>same<span class="w"> </span>request<span class="w"> </span>tag<span class="o">)</span>
+5218285b<span class="w"> </span><span class="o">(</span>Stefan<span class="w"> </span>Wehrmeyer<span class="w"> </span><span class="m">2013</span>-04-02,<span class="w"> </span>Fix<span class="w"> </span>email<span class="w"> </span>name<span class="w"> </span>replacement<span class="o">)</span>
+</pre></div>
+<p>Tags on Froide's main branch.</p>
+<div class="highlight"><pre><span></span>froide<span class="w"> </span><span class="o">(</span>main<span class="o">)</span>$<span class="w"> </span>git<span class="w"> </span>remote<span class="w"> </span>-v
+origin<span class="w">	</span>https://github.com/okfde/froide<span class="w"> </span><span class="o">(</span>fetch<span class="o">)</span>
+origin<span class="w">	</span>https://github.com/okfde/froide<span class="w"> </span><span class="o">(</span>push<span class="o">)</span>
+
+froide<span class="w"> </span><span class="o">(</span>main<span class="o">)</span>$<span class="w"> </span>git<span class="w"> </span>branch
+*<span class="w"> </span>main
+
+froide<span class="w"> </span><span class="o">(</span>main<span class="o">)</span>$<span class="w"> </span>git<span class="w"> </span>log<span class="w"> </span>--pretty<span class="o">=</span><span class="s1">&#39;format:%h%d (%cn %as, %s)&#39;</span><span class="w"> </span>--tags<span class="w"> </span>--no-walk
+cb21c3a9<span class="w"> </span><span class="o">(</span>tag:<span class="w"> </span>v5.0.0<span class="o">)</span><span class="w"> </span><span class="o">(</span>Stefan<span class="w"> </span>Wehrmeyer<span class="w"> </span><span class="m">2018</span>-09-03,<span class="w"> </span>Bump<span class="w"> </span>version<span class="w"> </span>to<span class="w"> </span><span class="m">5</span>.0.0<span class="o">)</span>
+066cc4a2<span class="w"> </span><span class="o">(</span>tag:<span class="w"> </span>v3.0<span class="o">)</span><span class="w"> </span><span class="o">(</span>Stefan<span class="w"> </span>Wehrmeyer<span class="w"> </span><span class="m">2013</span>-03-14,<span class="w"> </span>Bump<span class="w"> </span>to<span class="w"> </span>version<span class="w"> </span><span class="m">3</span>.0<span class="o">)</span>
+00ec1650<span class="w"> </span><span class="o">(</span>tag:<span class="w"> </span>v2.0<span class="o">)</span><span class="w"> </span><span class="o">(</span>Stefan<span class="w"> </span>Wehrmeyer<span class="w"> </span><span class="m">2012</span>-10-05,<span class="w"> </span>Make<span class="w"> </span>public<span class="w"> </span>body<span class="w"> </span>number<span class="w"> </span>static<span class="w"> </span>on<span class="w"> </span>Hamburg<span class="w"> </span><span class="k">for</span><span class="w"> </span>now<span class="o">)</span>
+77d7f8bf<span class="w"> </span><span class="o">(</span>tag:<span class="w"> </span>django-1.4<span class="o">)</span><span class="w"> </span><span class="o">(</span>Stefan<span class="w"> </span>Wehrmeyer<span class="w"> </span><span class="m">2012</span>-09-01,<span class="w"> </span>Update<span class="w"> </span>requirements<span class="w"> </span><span class="k">for</span><span class="w"> </span>Django<span class="w"> </span><span class="m">1</span>.4<span class="o">)</span>
+</pre></div>
+<h3>Repos for this upgrade</h3>
+<table>
+<thead>
+<tr>
+  <th style="text-align:left">Repositories</th>
+  <th style="text-align:left">URL</th>
+  <th style="text-align:left">Branch</th>
+  <th style="text-align:left">Forked from</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left">UIPA</td>
+  <td style="text-align:left"><a href="https://github.com/russtoku/uipa">https://github.com/russtoku/uipa</a></td>
+  <td style="text-align:left">dj_1_11</td>
+  <td style="text-align:left"><a href="https://github.com/CodeWithAloha/uipa">https://github.com/CodeWithAloha/uipa</a></td>
+</tr>
+<tr>
+  <td style="text-align:left">Froide</td>
+  <td style="text-align:left"><a href="https://github.com/russtoku/froide">https://github.com/russtoku/froide</a></td>
+  <td style="text-align:left">dj_1_11</td>
+  <td style="text-align:left"><a href="https://github.com/CodeWithAloha/froide">https://github.com/CodeWithAloha/froide</a></td>
+</tr>
+</tbody>
+</table>
 <h2>Error loading User model (06/04/2024)</h2>
-<h3>FIXED!</h3>
+<p><em><strong>FIXED!</strong></em></p>
+<h3>The FIX</h3>
 <p>This problem is due to the Froide account User model trying to provide a method
 to return the SetPasswordForm for the views. The fix is to remove
 SetPasswordForm from froide/account/models.py and add it to
