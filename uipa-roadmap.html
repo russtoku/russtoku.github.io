@@ -29,7 +29,7 @@
         <section id="main-content">
           
   <h1>Roadmap to updgrade UIPA to Django 4.2 and Python 3.10</h1>
-<p><em>Last update: 12/23/2024</em><br />
+<p><em>Last update: 01/11/2025</em><br />
 <a href="/">Back to home</a><br />
 <a href="/posts/">Back to Posts</a></p>
 <h2>Status</h2>
@@ -37,25 +37,28 @@
 <thead>
 <tr>
   <th>Item</th>
-  <th>Production Version</th>
-  <th>Working Version</th>
+  <th style="text-align:right">Working Version</th>
+  <th style="text-align:right">Production Version</th>
 </tr>
 </thead>
 <tbody>
 <tr>
   <td>Django</td>
-  <td>1.9</td>
-  <td>1.11</td>
+  <td style="text-align:right">1.11</td>
+  <td style="text-align:right">1.9</td>
 </tr>
 <tr>
   <td>Python</td>
-  <td>2.7</td>
-  <td>3.8</td>
+  <td style="text-align:right">3.8</td>
+  <td style="text-align:right">2.7</td>
 </tr>
 </tbody>
 </table>
+<p>Repo: https://github.com/russtoku/uipa/tree/dj_1_11</p>
+<p>Froide source merged into UIPA.org in dj_1_11 branch of russtoku's fork of UIPA.org.</p>
 <h3>Change Log</h3>
 <ul>
+<li><strong>01/11/2025:</strong> Added site map based on dj_1_11 branch of russtoku fork.</li>
 <li><strong>12/23/2024:</strong> Fixed some broken things. Removed django-overextends
 dependency because the functionality is included in Django 1.9.</li>
 <li><strong>11/14/2024:</strong> Incorporated froide into uipa project source instead of being
@@ -67,10 +70,9 @@ version supported for Django 1.11.29).</li>
 <h3>Next steps</h3>
 <p>See the sections below the ROADMAP for more details.</p>
 <ul>
-<li>Probably should finish up <strong>3</strong> (<em>Upgrade Python to 3.8</em>) through <strong>5</strong> (<em>Remove
-django-overextends dependency because Django 1.9 already provides the same
-capabilities</em>) before tackling <strong>8</strong> (<em>Upgrade Django to 2.0.13</em>).</li>
-<li><strong>7</strong> (<em>Figure out deployment for production</em>) can be pushed out for a while.</li>
+<li>Finish up <strong>3</strong> (<em>Upgrade Python to 3.8</em>) before tackling <strong>8</strong> (<em>Upgrade Django to
+2.0.13</em>).</li>
+<li><strong>7</strong> (<em>Figure out deployment for production</em>) can be put on hold for a while.</li>
 </ul>
 <h2>ROADMAP</h2>
 <ol>
@@ -122,20 +124,25 @@ only up to elasticsearch 2.x).</li>
 <ul>
 <li><strong>Mostly Completed:</strong> 10/14/2024</li>
 <li>Does work with Django 1.11.17.</li>
-<li>No longer supported as of 10/07/2024.</li>
+<li>Python 3.8 is no longer supported as of 10/07/2024.</li>
+<li>Add <a href="https://github.com/russtoku/uipa/blob/dj_1_11/docs/uipa-site-map.md">site
+map</a>. <strong>Completed:</strong> 01/11/2025</li>
 <li>TODO:<ul>
-<li><strong>NO:</strong> Install GDAL, postgis, and libgeoip for django-floppyforms or not.<ul>
+<li>Create test plan and tests because there are major changes with Django
+2.0.<ul>
+<li>Use <code>pytest</code> instead of Django's &quot;manage.py test&quot; which uses
+<code>unittest</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>WON'T DO</strong><ul>
+<li>Install GDAL, postgis, and libgeoip for django-floppyforms or not.<ul>
 <li>Can leave things the way they are without GDAL, postgis, and
 libgeoip because they aren't really being used; especially
 floppyforms GEO widgets.</li>
 <li>If don't need the GIS stuff, see:
 https://github.com/jazzband/django-floppyforms/issues/189#issuecomment-379546682</li>
-</ul>
-</li>
-<li>Create test plan and tests because there are major changes with Django
-2.0.<ul>
-<li>Use <code>pytest</code> instead of Django's &quot;manage.py test&quot; which uses
-<code>unittest</code>.</li>
 </ul>
 </li>
 </ul>
@@ -369,19 +376,46 @@ templates</a>.</p>
 <tr>
   <th style="text-align:left">Version</th>
   <th style="text-align:left">Latest Release</th>
+  <th style="text-align:left">End of Mainstream Support</th>
   <th style="text-align:left">End of Extended Support</th>
 </tr>
 </thead>
 <tbody>
 <tr>
+  <td style="text-align:left">Django 5.2 LTS</td>
+  <td style="text-align:left">Coming April 2025</td>
+  <td style="text-align:left">December 2025</td>
+  <td style="text-align:left">April 2028</td>
+</tr>
+<tr>
+  <td style="text-align:left">Django 5.1</td>
+  <td style="text-align:left">5.1.4</td>
+  <td style="text-align:left">April 2025</td>
+  <td style="text-align:left">December 2025</td>
+</tr>
+<tr>
   <td style="text-align:left">Django 4.2 LTS</td>
-  <td style="text-align:left">4.2.16 (09/03/2024)</td>
+  <td style="text-align:left">4.2.17</td>
+  <td style="text-align:left">12/04/2024</td>
   <td style="text-align:left">April 2026</td>
 </tr>
 <tr>
-  <td style="text-align:left">Django 5.2 LTS</td>
-  <td style="text-align:left">5.1.3 (11/05/2024)</td>
-  <td style="text-align:left">April 2028</td>
+  <td style="text-align:left">Django 3.2 LTS</td>
+  <td style="text-align:left">3.2.25</td>
+  <td style="text-align:left">12/07/2021</td>
+  <td style="text-align:left">April 2024</td>
+</tr>
+<tr>
+  <td style="text-align:left">Django 2.2 LTS</td>
+  <td style="text-align:left">2.2.28</td>
+  <td style="text-align:left">12/02/2019</td>
+  <td style="text-align:left">April 2022</td>
+</tr>
+<tr>
+  <td style="text-align:left">Django 1.11 LTS</td>
+  <td style="text-align:left">1.11.29</td>
+  <td style="text-align:left">12/02/2017</td>
+  <td style="text-align:left">April 2020</td>
 </tr>
 </tbody>
 </table>
@@ -396,19 +430,34 @@ templates</a>.</p>
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left">Python 3.10</td>
-  <td style="text-align:left">3.10.15 (09/07/2024)</td>
-  <td style="text-align:left">October 2026</td>
+  <td style="text-align:left">Python 3.13</td>
+  <td style="text-align:left">3.13.1 (12/03/2024)</td>
+  <td style="text-align:left">October 2029</td>
 </tr>
 <tr>
   <td style="text-align:left">Python 3.12</td>
-  <td style="text-align:left">3.12.7 (10/01/2024)</td>
+  <td style="text-align:left">3.12.8 (12/03/2024)</td>
   <td style="text-align:left">October 2028</td>
 </tr>
 <tr>
-  <td style="text-align:left">Python 3.13</td>
-  <td style="text-align:left">3.13.0 (10/07/2024)</td>
-  <td style="text-align:left">October 2029</td>
+  <td style="text-align:left">Python 3.11</td>
+  <td style="text-align:left">3.11.11 (12/03/2024 source only)</td>
+  <td style="text-align:left">October 2027</td>
+</tr>
+<tr>
+  <td style="text-align:left">Python 3.10</td>
+  <td style="text-align:left">3.10.16 (12/03/2024 source only)</td>
+  <td style="text-align:left">October 2026</td>
+</tr>
+<tr>
+  <td style="text-align:left">Python 3.9</td>
+  <td style="text-align:left">3.9.21 (12/03/2024 source only)</td>
+  <td style="text-align:left">October 2025</td>
+</tr>
+<tr>
+  <td style="text-align:left">Python 3.8</td>
+  <td style="text-align:left">3.8.20 (09/06/2024 source only)</td>
+  <td style="text-align:left">October 2024</td>
 </tr>
 </tbody>
 </table>
