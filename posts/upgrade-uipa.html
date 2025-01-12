@@ -29,7 +29,7 @@
         <section id="main-content">
           
   <h1>Thoughts on the initiative to upgrade UIPA.org</h1>
-<p><em>Last update: 11/06/2024</em><br />
+<p><em>Last update: 01/12/2025</em><br />
 <a href="/">Back to home</a><br />
 <a href="/posts/">Back to Posts</a></p>
 <h2>Abstract</h2>
@@ -39,15 +39,20 @@ don't know what you don't know&quot;. Advice is plentiful and readily available 
 it's of no use for the same reason.</p>
 <p>The kind folks of Code With Aloha have settled on upgrading by switching to the
 current version of Froide because it works with Django 4.2 and Python 3.10. Both
-are currently supported.</p>
-<p>I think that upgrading from the old version of Froide that the production
-UIPA.org site is built from is a better approach because it follows the
-guidelines of:</p>
+are supported until the end of 2024.</p>
+<p>I think that upgrading the old version of Froide in-place is a better approach
+because it follows the guidelines of:</p>
 <ul>
 <li>&quot;Keep it simple.&quot;</li>
 <li>&quot;Less is more.&quot;</li>
 <li>&quot;What problem are we trying to solve?&quot;</li>
 </ul>
+<p>Upgrading in-place means taking version of Froide that the production UIPA.org
+site is built from and changing it to make it work with newer versions of Python
+and Django. Unlike the current versions of Froide, this doesn't add more
+functionality to what is already working. It also doesn't attempt to contribute
+back anything to the Froide code base because it uses a smaller subset of the
+current Froide code base.</p>
 <h2>Background</h2>
 <p>In 2016, I got involved with Code for Hawaii and did a tiny amount of work on
 one small part of the <a href="https://uipa.org/">UIPA.org</a> website.</p>
@@ -81,7 +86,7 @@ UIPA.org</a> on their <a href="https://github.com/orgs/CodeWithAloha/projects/14
 Development Board</a>.</p>
 <p>This post is about exploring a different choice. I believe that it's better to
 keep things as simple as possible. Let's not add more complexity and unknowns
-what is already a lot of unknowns.</p>
+to what is already a lot of unknowns.</p>
 <h2>A path of discovery</h2>
 <p>I tend to agree with the Zen of Python that simpler is better and explicit
 is better. The problems that I've had writing or fixing software have to do
@@ -90,13 +95,14 @@ managers, &quot;What does done look like?&quot;. That would always make her angr
 &quot;Don't you know?&quot;.</p>
 <p>Of course not! If it's not spelled out explicitly, you're leaving too much to
 chance and almost guaranteeing failure.</p>
-<p>I experienced this when I first became a software developer. At the end of the
-first interview with a client (a manager position) about what the scope of work
-would be, he asked me when it would be done. He had just rattled off a high
+<p>I have experienced this when I first became a software developer. At the end of
+the first interview with a client (a manager position) about what the scope of
+work would be, he asked me when it would be done. He had just rattled off a high
 level description of what the new system was to do.</p>
-<p>Of course, I couldn't give him an answer because I didn't know specifically
-what would be needed. He wasn't able to provide much more detail. &quot;Shouldn't he
-have known better since he had been in IT before?&quot;, I wondered to myself.</p>
+<p>Of course, I couldn't give him an answer to when it would be done because
+I didn't know specifically what would be needed. He wasn't able to provide much
+more detail. &quot;Shouldn't he have known better since he had been in IT before?&quot;,
+I wondered to myself.</p>
 <p>Since then I've been trying to figure out how to make sure that I can give the
 client what they need and get it to them in a reasonable time.</p>
 <p>The way forward is like an explorer trying to get to some destination that
@@ -122,16 +128,19 @@ clearly state what done looks like. You need to know the differences are between
 Didn't work. I got an error that I couldn't resolve at that time. Definitely
 a show-stopper.</p>
 <h3>Make a roadmap</h3>
-<p>I quickly read through the release notes for the Django versions
-from 1.11 to 4.2 and made a <a href="/uipa-roadmap.html">roadmap</a> of what things might change or pitfalls
-that I might encounter.</p>
+<p>I quickly read through the release notes for the Django versions from 1.11 to
+4.2 and made
+a <a href="https://github.com/russtoku/uipa/blob/update/docs/Roadmap.md">roadmap</a> of
+what things might change or pitfalls that I might encounter.</p>
 <h3>Just upgrade to the next version</h3>
 <p>OK, take things one step at a time. I tried to see if I could fix things and get
 Django 1.11 to work with UIPA.org. Didn't work. There was that same error that
 I couldn't figure out and web searches didn't help. I gave up and didn't dive
 deeper into the code.</p>
 <p>However, several months later, I finally figured out how to fix that error and
-have upgraded to Django 1.11.17 with Python 3.8.</p>
+have upgraded to Django 1.11.17 with Python 3.8. This is reflected in the
+<a href="https://github.com/russtoku/uipa/tree/update">update branch</a> in my fork of the
+UIPA.org repo.</p>
 <h2>It seems to work for Code With Aloha</h2>
 <p>Tyler Chong with Code With Aloha was able to get a new version of Froide
 working but he didn't know that UIPA.org is based on using a Froide Theme and
@@ -139,7 +148,7 @@ not directly on Froide. He was able to make that change so that what's in the
 <a href="https://github.com/CodeWithAloha/uipa">uipa repo</a> runs with something that
 looks what a <em>new and improved UIPA.org</em> would look like. So that's the
 starting point of the initiative.</p>
-<h2>Oh, they're apps. Not!</h2>
+<h2>Oh, they're just apps. Not!</h2>
 <p>For those of you who aren't familiar with Django, a Django website is
 usually made up of one or more <em>apps</em> where an <em>app</em> provides a reusable amount
 of functionality. This should allow you to have modular pieces that you can mix
@@ -160,12 +169,13 @@ installs Froide as a dependency when you run <code>pip install -r requirements.t
 <p>For Hawaii, the form provided by the Office of Information Practices has
 a section where the requester can ask for a waiver of the fees for the office
 preparing the information for the request. To handle this requirement, Froide
-was installed as an editable dependency and its code modified to change the
+was installed as an <em>editable dependency</em> and its code modified to change the
 way that information requests are made by a user.</p>
 <p>While Froide is broken out into what looks like separate <em>apps</em> and must be
 configured like <em>apps</em>, that doesn't mean that you can leave any out of the
-<code>INSTALLED_APPS</code> list and things will still work. It's not modular,
-mix-and-match.</p>
+<code>INSTALLED_APPS</code> list and things will still work. It's not modular and
+mix-and-match. Two repos must be maintained; one for the UIPA <em>theme</em> and one
+for the modified Froide.</p>
 <h2>Back to the beginning</h2>
 <p>So, where does one start?</p>
 <p>In Alice in Wonderland, Lewis Caroll writes:</p>
@@ -194,19 +204,23 @@ trying to get something done. That means identifying:</p>
 <li>What things does the system do when the user isn't directly interacting with
 it?</li>
 </ul>
-<p>For websites, it's good to have a sitemap. In its simplest form, this is a list
+<p>For websites, it's good to have a site map. In its simplest form, this is a list
 of pages (helps to have a name and short description of what it is or does) and
 the connections between them. Typically, it's represented by a drawing of boxes
 and lines that connect them from top (home page) to the lowest (or farthest
 away from the home page) pages.</p>
 <p>One of the problem we have is that there is no list of functionality.</p>
+<p>I created a <a href="https://github.com/russtoku/uipa/blob/update/docs/uipa-site-map.md">site
+map</a> based
+on my <a href="https://github.com/russtoku/uipa/tree/update">upgrade branch</a>.</p>
 <h2>So what now?</h2>
-<p>It would very helpful is someone (or more people) make that list of what can be
+<p>It would very helpful if others continue expanding the site map with what can be
 done with UIPA.org. This would help with building a test suite to help tell us
 what done looks like.</p>
-<p>The alternate approach I'd like to investigate starts with modifying the old
-UIPA and Froide software to work with the new versions Django and Python instead
-of jumping to a new version Froide. I have a <a href="/uipa-roadmap.html">roadmap</a> for
+<p>The alternate approach I'm exploring is an in-place upgrade. It starts with
+modifying the old UIPA theme and old Froide software to work with the new
+versions Django and Python instead of jumping to a new version Froide. I have
+a <a href="https://github.com/russtoku/uipa/blob/update/docs/Roadmap.md">roadmap</a> for
 this alternate path. I'm going to pursue it while the others follow the
 mainstream.</p>
 <p>I plan to build tests for each of the items on the functionality list. As I go,
