@@ -29,7 +29,7 @@
         <section id="main-content">
           
   <h1>Neovim and REPLs</h1>
-<p><em>Last update: 07/05/2023</em><br />
+<p><em>Last update: 01/20/2025</em><br />
 <a href="/">Back to home</a><br />
 <a href="/posts/">Back to Posts</a></p>
 <p>This is about sending code that you're editing in a buffer to another process
@@ -55,64 +55,51 @@ take advantage of the Tree-sitter support in Neovim.</p>
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><strong><a href="https://github.com/Olical/conjure">Conjure</a></strong></td>
+  <td style="text-align:left"><a href="https://github.com/Olical/conjure">Conjure</a></td>
   <td style="text-align:left">Fennel, Lua</td>
   <td style="text-align:left">uv.spawn(), uv.write()</td>
 </tr>
 <tr>
-  <td style="text-align:left"><strong><a href="https://github.com/Vigemus/iron.nvim">iron.nvim</a></strong></td>
+  <td style="text-align:left"><a href="https://github.com/hkupty/iron.nvim">iron.nvim</a></td>
   <td style="text-align:left">Lua</td>
   <td style="text-align:left">termopen(), chansend() <br>Uses bracketed paste mode when sending Python code.</td>
 </tr>
 <tr>
-  <td style="text-align:left"><strong><a href="https://github.com/tpope/vim-fireplace">vim-fireplace</a></strong></td>
+  <td style="text-align:left"><a href="https://github.com/tpope/vim-fireplace">vim-fireplace</a></td>
   <td style="text-align:left">Vimscript, Python</td>
   <td style="text-align:left">jobstart(<code>{cmd}</code>), chansend() <br>where <code>{cmd}</code> is something like <em>['python', '.../pythonx/fireplace.py', 'nrepl://127.0.0.1:7888']</em></td>
 </tr>
 <tr>
-  <td style="text-align:left"><strong><a href="https://github.com/jpalardy/vim-slime">vim-slime</a></strong></td>
+  <td style="text-align:left"><a href="https://github.com/jpalardy/vim-slime">vim-slime</a></td>
   <td style="text-align:left">Vimscript</td>
   <td style="text-align:left">:sp term://<code>{cmd}</code>, chansend()</td>
 </tr>
-</tbody>
-</table>
-<p></p>
-
-<p>I haven't looked into these plugins.</p>
-<table>
-<thead>
 <tr>
-  <th style="text-align:left">Plugin</th>
-  <th style="text-align:left">Implementation</th>
-  <th style="text-align:left">IPC Mechanism</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left"><strong><a href="https://github.com/kassio/neoterm">neoterm</a></strong></td>
-  <td style="text-align:left"></td>
-  <td style="text-align:left"></td>
+  <td style="text-align:left"><a href="https://github.com/vlime/vlime">vlime</a></td>
+  <td style="text-align:left">Vimscript</td>
+  <td style="text-align:left">termopen(), chansend()</td>
 </tr>
 <tr>
-  <td style="text-align:left"><strong><a href="https://github.com/jalvesaq/vimcmdline">vimcmdline</a></strong></td>
-  <td style="text-align:left"></td>
-  <td style="text-align:left"></td>
+  <td style="text-align:left"><a href="https://github.com/kassio/neoterm">neoterm</a></td>
+  <td style="text-align:left">Vimscript</td>
+  <td style="text-align:left">termopen(), chansend()</td>
 </tr>
 <tr>
-  <td style="text-align:left"><strong><a href="https://github.com/benknoble/vim-simpl">vim-simpl</a></strong></td>
-  <td style="text-align:left"></td>
-  <td style="text-align:left"></td>
+  <td style="text-align:left"><a href="https://github.com/jalvesaq/vimcmdline">vimcmdline</a></td>
+  <td style="text-align:left">Vimscript</td>
+  <td style="text-align:left">termopen(), chansend()</td>
 </tr>
 <tr>
-  <td style="text-align:left"><strong><a href="https://github.com/vlime/vlime">vlime</a></strong></td>
-  <td style="text-align:left"></td>
-  <td style="text-align:left"></td>
+  <td style="text-align:left"><a href="https://github.com/benknoble/vim-simpl">vim-simpl</a></td>
+  <td style="text-align:left">Vimscript</td>
+  <td style="text-align:left">:execute &quot;term {cmd}&quot; opens {cmd} in a terminal buffer</td>
 </tr>
 </tbody>
 </table>
 <h2>Sending Code to a Sub-process</h2>
 <p>These are the facilities in Neovim that let one send stuff to a child process
-spawned by the main Neovim process. For more information about the <em>IPC Mechanism</em>, see the Neovim help (<code>:help &lt;topic&gt;</code>; for example: <code>:he luv</code>).</p>
+spawned by the main Neovim process. For more information about the <em>IPC
+Mechanism</em>, see the Neovim help (<code>:help &lt;topic&gt;</code>; for example: <code>:he luv</code>).</p>
 <table>
 <thead>
 <tr>
@@ -152,15 +139,23 @@ spawned by the main Neovim process. For more information about the <em>IPC Mecha
 <p></p>
 
 <h3>About the Terminal-Emulator</h3>
-<p>There are at least two ways to start a terminal emulator Sub-process.
-<code>termopen()</code> and <code>:sp term://{cmd}</code>. The difference between the two is how they
-are typically used. The latter is generally invoke in command-line mode.
-However, Neovim provides the mechanism to use both programmatically.</p>
+<p>Here are some ways to start a terminal emulator sub-process:</p>
+<ul>
+<li><code>:sp term://{cmd}</code> or <code>:edit term://{cmd}</code> or <code>:execute &quot;term {cmd}&quot;</code> where
+<code>{cmd}</code> is an interactive program like bash or python.</li>
+<li><code>termopen()</code></li>
+</ul>
+<p>The difference between the two is how they are typically used. The first is
+generally invoked in command-line mode for interaction with <code>{cmd}</code> in a split
+window or in the current window.</p>
+<p><code>termopen()</code> returns the job-id on success so it is useful programmatically. You
+can send data to the program running and connected to a terminal buffer using
+<code>chansend(job-id, data)</code>.</p>
 <p>While <code>termopen()</code> and <code>jobstart()</code> take the same arguments, <code>termopen()</code> is
 more specialized than <code>jobstart()</code>. <code>termopen()</code> automatically sets the <code>pty</code>
-option of the <em>jobstart-options</em>. Thus, the output of the program (<code>cmd</code>)
-running in the terminal-emulator is only available via stdout (combination of
-stdout and stderr).</p>
+option of the <em>jobstart-options</em> and connects to a terminal buffer. Also, the
+output of the program (<code>cmd</code>) running in the terminal-emulator is only available
+via stdout (as a combination of stdout and stderr).</p>
 
 
         </section>
